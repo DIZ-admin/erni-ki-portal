@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Академия Промптинга | ERNI-KI</title>
+    <style>
 :root {
   /* ERNI Corporate Palette */
   --primary-color: #0000EE; /* ERNI Blue */
@@ -193,3 +201,62 @@ img {
     border-bottom: 1px solid var(--border-color);
   }
 }
+
+</style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">ERNI Gruppe</span>
+            </div>
+            <nav>
+                <a href="index.aspx" class="nav-item">🏠 Главная</a>
+                <a href="guides/basics.aspx" class="nav-item">🚀 Основы</a>
+                <a href="guides/rag.aspx" class="nav-item">📚 Работа с данными</a>
+                <a href="guides/advanced.aspx" class="nav-item">⚡️ Продвинутый уровень</a>
+                <a href="../guides/tools.aspx" class="nav-item">🛠 Инструменты</a>
+                <a href="best-practices.aspx" class="nav-item active">🎓 Академия Промптинга</a>
+                <a href="faq.aspx" class="nav-item">❓ FAQ</a>
+            </nav>
+            <div class="card">
+                <h3>📝 Работа с текстом</h3>
+                <p>"Сделай саммари этой статьи..."</p>
+                <p>"Исправь грамматические ошибки..."</p>
+            </div>
+            <div class="card">
+                <h3>🧠 Генерация идей</h3>
+                <p>"Предложи 10 тем для блога..."</p>
+                <p>"Придумай название для продукта..."</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Корпоративный AI Портал. Разработано командой DIZ.</p>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Simple Accordion for FAQ
+    const accordions = document.querySelectorAll('.accordion-header');
+    accordions.forEach(acc => {
+        acc.addEventListener('click', () => {
+            acc.classList.toggle('active');
+            const panel = acc.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    });
+});
+
+</script>
+</body>
+</html>
