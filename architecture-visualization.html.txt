@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open WebUI Hub - Plattform-Architektur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            background: rgba(255,255,255,0.95);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            min-width: 150px;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .architecture-diagram {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .layer {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .layer-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .service {
+            background: white;
+            border: 3px solid;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 160px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .service-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .service-port {
+            font-size: 0.8rem;
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Layer Colors */
+        .presentation { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+        .presentation .layer-title { background: #2196F3; }
+        .presentation .service { border-color: #2196F3; }
+
+        .application { background: linear-gradient(135deg, #E8F5E8, #C8E6C9); }
+        .application .layer-title { background: #4CAF50; }
+        .application .service { border-color: #4CAF50; }
+
+        .ai-services { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+        .ai-services .layer-title { background: #FF9800; }
+        .ai-services .service { border-color: #FF9800; }
+
+        .data-services { background: linear-gradient(135deg, #FCE4EC, #F8BBD9); }
+        .data-services .layer-title { background: #E91E63; }
+        .data-services .service { border-color: #E91E63; }
+
+        .flow-arrows {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2rem;
+            color: #666;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .info-section h3 {
+            color: #2196F3;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-section ul {
+            list-style: none;
+        }
+
+        .info-section li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-section li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            display: none;
+            max-width: 250px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .metrics { gap: 15px; }
+            .services { gap: 10px; }
+            .service { min-width: 140px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Open WebUI Hub</h1>
+            <p>Intelligente KI-Plattform für Unternehmen</p>
+            <p style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">
+                Ein modernes System für künstliche Intelligenz, das Unternehmen dabei hilft, die Dokumentenbearbeitung zu automatisieren,
+                Kundenfragen zu beantworten und die Teameffizienz zu steigern.
+            </p>
+        </div>
+
+
+
+        <div class="architecture-diagram">
+            <div class="layer presentation">
+                <div class="layer-title">🎯 Zugangsebene</div>
+                <p style="text-align: center; margin-bottom: 15px; color: #666; font-size: 0.95rem;">
+                    Komponenten, die sicheren Benutzerzugang zum System über das Internet gewährleisten
+                </p>
+                <div class="services">
+                    <div class="service" data-tooltip="Verteilt Benutzeranfragen und gewährleistet stabilen Systembetrieb">
+                        <div class="service-name">Nginx Proxy</div>
+                        <div class="service-desc">Lastverteiler</div>
+                        <div class="service-port">Webserver</div>
+                    </div>
+                    <div class="service" data-tooltip="Sicherer Tunnel für geschützten Zugang zum System von überall auf der Welt">
+                        <div class="service-name">Cloudflare</div>
+                        <div class="service-desc">Sicherer Zugang</div>
+                        <div class="service-port">Globales Netzwerk</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrows">⬇️</div>
+
+            <div class="layer application">
+                <div class="layer-title">💼 Anwendungsebene</div>
+                <p style="text-align: center; margin-bottom: 15px; color: #666; font-size: 0.95rem;">
+                    Hauptanwendungen, mit denen Benutzer arbeiten und die das gesamte System verwalten
+                </p>
+                <div class="services">
+                    <div class="service" data-tooltip="Hauptschnittstelle für die Kommunikation mit künstlicher Intelligenz - hier stellen Benutzer Fragen und erhalten Antworten">
+                        <div class="service-name">Open WebUI</div>
+                        <div class="service-desc">KI-Schnittstelle</div>
+                        <div class="service-port">Webanwendung</div>
+                    </div>
+                    <div class="service" data-tooltip="Kontrollzentrum des gesamten Systems - überwacht die Arbeit aller Komponenten und gewährleistet deren Interaktion">
+                        <div class="service-name">Hub Service</div>
+                        <div class="service-desc">Kontrollzentrum</div>
+                        <div class="service-port">Verwaltungssystem</div>
+                    </div>
+                    <div class="service" data-tooltip="Sicherheitsdienst - überprüft Benutzerzugriffsrechte und schützt das System vor unbefugtem Zugriff">
+                        <div class="service-name">Auth Service</div>
+                        <div class="service-desc">Sicherheitsdienst</div>
+                        <div class="service-port">Zugriffskontrolle</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrows">⬇️</div>
+
+            <div class="layer ai-services">
+                <div class="layer-title">🧠 Künstliche Intelligenz Ebene</div>
+                <p style="text-align: center; margin-bottom: 15px; color: #666; font-size: 0.95rem;">
+                    Intelligente Services, die Text verstehen, Dokumente verarbeiten und Antworten generieren
+                </p>
+                <div class="services">
+                    <div class="service" data-tooltip="Leistungsstarker KI-Assistent, der direkt auf unseren Servern läuft - versteht Fragen und gibt intelligente Antworten">
+                        <div class="service-name">Ollama</div>
+                        <div class="service-desc">Lokales KI-Gehirn</div>
+                        <div class="service-port">Eigene KI</div>
+                    </div>
+                    <div class="service" data-tooltip="Intelligenter Umschalter zwischen verschiedenen KI-Services - wählt die beste KI für jede Aufgabe">
+                        <div class="service-name">LiteLLM</div>
+                        <div class="service-desc">KI-Koordinator</div>
+                        <div class="service-port">Beste KI-Auswahl</div>
+                    </div>
+                    <div class="service" data-tooltip="Intelligenter Assistent für die Dokumentenarbeit - liest PDF, Word-Dateien und extrahiert wichtige Informationen">
+                        <div class="service-name">Docling</div>
+                        <div class="service-desc">Dokumentenverarbeitung</div>
+                        <div class="service-port">Dateien lesen</div>
+                    </div>
+                    <div class="service" data-tooltip="Wandelt Text in lebendige Sprache um - kann jede Systemantwort vertonen">
+                        <div class="service-name">EdgeTTS</div>
+                        <div class="service-desc">Sprachassistent</div>
+                        <div class="service-port">Text zu Sprache</div>
+                    </div>
+                    <div class="service" data-tooltip="Analysiert und versteht Bilder - kann beschreiben was auf Fotos zu sehen ist, Objekte finden und Fragen zu Bildern beantworten">
+                        <div class="service-name">Bildverarbeitung</div>
+                        <div class="service-desc">Bildanalyse</div>
+                        <div class="service-port">Bilder verstehen</div>
+                    </div>
+                    <div class="service" data-tooltip="Wandelt Audioaufnahmen in Text um - kann Sprache, Vorlesungen, Interviews und beliebige Audiodateien transkribieren">
+                        <div class="service-name">Audio-Transkription</div>
+                        <div class="service-desc">Audio zu Text</div>
+                        <div class="service-port">Sprache entschlüsseln</div>
+                    </div>
+                    <div class="service" data-tooltip="Ermöglicht die Kommunikation mit Datenbanken in normaler Sprache - man kann Fragen zu Daten stellen und Antworten ohne SQL-Kenntnisse erhalten">
+                        <div class="service-name">SQL-Daten Chat</div>
+                        <div class="service-desc">Datenbankgespräch</div>
+                        <div class="service-port">Datenfragen</div>
+                    </div>
+                    <div class="service" data-tooltip="Intelligenter Assistent für komplexe mehrstufige Aufgaben - kann planen, Aktionssequenzen ausführen und Entscheidungen treffen">
+                        <div class="service-name">KI-Agent</div>
+                        <div class="service-desc">Prozessautomatisierung</div>
+                        <div class="service-port">Komplexe Aufgaben</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrows">⬇️</div>
+
+            <div class="layer data-services">
+                <div class="layer-title">💾 Datenspeicher-Ebene</div>
+                <p style="text-align: center; margin-bottom: 15px; color: #666; font-size: 0.95rem;">
+                    Zuverlässige Speicher für alle Systeminformationen - von Benutzerdaten bis zu KI-Wissen
+                </p>
+                <div class="services">
+                    <div class="service" data-tooltip="Hauptdatenbank des Systems - speichert alle wichtigen Informationen: Benutzer, Einstellungen, Gesprächsverläufe">
+                        <div class="service-name">PostgreSQL</div>
+                        <div class="service-desc">Hauptdatenbank</div>
+                        <div class="service-port">Datenspeicher</div>
+                    </div>
+                    <div class="service" data-tooltip="Schneller Systemspeicher - merkt sich häufig verwendete Informationen für sofortige Antworten">
+                        <div class="service-name">Redis Stack</div>
+                        <div class="service-desc">Schnellspeicher</div>
+                        <div class="service-port">Cache für Geschwindigkeit</div>
+                    </div>
+                    <div class="service" data-tooltip="Microsoft Cloud-Speicher - ermöglicht die Arbeit mit OneDrive-Dateien, Dokumentensynchronisation und Zugang zu Unternehmensdaten">
+                        <div class="service-name">OneDrive</div>
+                        <div class="service-desc">Cloud-Speicher</div>
+                        <div class="service-port">Dateien in der Cloud</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-grid">
+                <div class="info-section">
+                    <h3>🏆 Hauptfunktionen</h3>
+                    <ul>
+                        <li>Hohe Datensicherheit</li>
+                        <li>Leistungsstarke Berechnungen mit Grafikkarten</li>
+                        <li>Isolierte Speicherung verschiedener Datentypen</li>
+                        <li>Schneller Zugriff auf häufig verwendete Informationen</li>
+                        <li>Kontinuierliche Systemüberwachung</li>
+                        <li>Modulare Architektur für Zuverlässigkeit</li>
+                    </ul>
+                </div>
+                <div class="info-section">
+                    <h3>⚡ Leistung</h3>
+                    <ul>
+                        <li>Sofortige Antworten auf Anfragen</li>
+                        <li>Hohe Datenverarbeitungsgeschwindigkeit</li>
+                        <li>Arbeitet rund um die Uhr ohne Unterbrechung</li>
+                        <li>Einfache Skalierung bei steigender Last</li>
+                    </ul>
+                </div>
+                <div class="info-section">
+                    <h3>🔧 Systemfähigkeiten</h3>
+                    <ul>
+                        <li>Beantwortet Benutzerfragen</li>
+                        <li>Verarbeitet und analysiert Dokumente</li>
+                        <li>Merkt sich Gesprächskontext</li>
+                        <li>Arbeitet mit verschiedenen Sprachen</li>
+                        <li>Integriert sich mit externen Services</li>
+                        <li>Bietet Sprachantworten</li>
+                    </ul>
+                </div>
+                <div class="info-section">
+                    <h3>🛡️ Sicherheit</h3>
+                    <ul>
+                        <li>Identitätsprüfung jedes Benutzers</li>
+                        <li>Isolation der Komponenten voneinander</li>
+                        <li>Verschlüsselung aller Daten bei Übertragung</li>
+                        <li>Einhaltung internationaler Standards</li>
+                        <li>Sichere Speicherung von Passwörtern und Schlüsseln</li>
+                        <li>Mehrstufiger Netzwerkschutz</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Tooltip functionality
+        const services = document.querySelectorAll('.service');
+        const tooltip = document.getElementById('tooltip');
+
+        services.forEach(service => {
+            service.addEventListener('mouseenter', (e) => {
+                const tooltipText = e.target.closest('.service').getAttribute('data-tooltip');
+                tooltip.textContent = tooltipText;
+                tooltip.style.display = 'block';
+            });
+
+            service.addEventListener('mousemove', (e) => {
+                tooltip.style.left = e.pageX + 10 + 'px';
+                tooltip.style.top = e.pageY + 10 + 'px';
+            });
+
+            service.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+        });
+
+        // Service details data
+        const serviceDetails = {
+            'Nginx Proxy': {
+                'Назначение': 'Принимает все запросы от пользователей и направляет их в нужные части системы',
+                'Статус': 'Работает стабильно',
+                'Особенности': 'Обеспечивает быстрый доступ к системе',
+                'Роль': 'Входная точка для всех пользователей'
+            },
+            'Cloudflare': {
+                'Назначение': 'Обеспечивает безопасный доступ к системе из любой точки мира',
+                'Статус': 'Работает стабильно',
+                'Особенности': ['Защита от атак', 'Ускорение загрузки', 'Глобальная доступность'],
+                'Безопасность': 'Корпоративный уровень защиты'
+            },
+            'Open WebUI': {
+                'Назначение': 'Главный интерфейс, где пользователи общаются с искусственным интеллектом',
+                'Статус': 'Работает стабильно',
+                'Особенности': 'Использует мощные видеокарты для быстрой работы',
+                'Функции': 'Чат с AI, загрузка документов, история разговоров'
+            },
+            'Hub Service': {
+                'Назначение': 'Центральный координатор всей системы - следит за работой всех компонентов',
+                'Статус': 'Работает стабильно',
+                'Особенности': ['Управление системой', 'Быстрое кэширование', 'Резервные механизмы'],
+                'Производительность': 'Мгновенные ответы'
+            },
+            'Auth Service': {
+                'Назначение': 'Служба безопасности - проверяет, кто может пользоваться системой',
+                'Статус': 'Работает стабильно',
+                'Надежность': 'Полностью протестирован',
+                'Скорость': 'Мгновенная проверка доступа'
+            },
+            'Ollama': {
+                'Назначение': 'Собственный AI-мозг системы - работает прямо на наших серверах',
+                'Статус': 'Работает стабильно',
+                'Мощность': 'Использует видеокарты NVIDIA',
+                'Скорость': 'Быстрые и умные ответы',
+                'Особенности': ['Локальная работа', 'Высокая производительность']
+            },
+            'LiteLLM': {
+                'Назначение': 'Умный координатор - выбирает лучший AI для каждой задачи',
+                'Статус': 'Работает стабильно',
+                'Возможности': 'Работает с разными AI-сервисами',
+                'Провайдеры': ['OpenAI', 'Anthropic', 'Google', 'Azure']
+            },
+            'Docling': {
+                'Назначение': 'Умный помощник для работы с документами - читает и понимает файлы',
+                'Статус': 'Работает стабильно',
+                'Возможности': ['Чтение PDF', 'Обработка Word', 'Извлечение текста'],
+                'Качество': 'Продвинутая обработка документов'
+            },
+            'EdgeTTS': {
+                'Назначение': 'Голосовой помощник - превращает текстовые ответы в живую речь',
+                'Статус': 'Работает стабильно',
+                'Совместимость': 'Работает как профессиональные голосовые сервисы',
+                'Функции': ['Озвучивание текста', 'Генерация аудио']
+            },
+            'PostgreSQL': {
+                'Назначение': 'Главное хранилище всей важной информации системы',
+                'Статус': 'Работает стабильно',
+                'Возможности': ['Надежное хранение', 'Быстрый поиск', 'Полнотекстовый поиск'],
+                'Базы данных': ['Данные пользователей', 'Настройки AI']
+            },
+            'Redis Stack': {
+                'Назначение': 'Быстрая память системы - запоминает часто используемую информацию',
+                'Статус': 'Работает стабильно',
+                'Производительность': 'Высокая скорость доступа к данным',
+                'Функции': ['Кэширование', 'Управление сессиями']
+            },
+            'Обработка фото': {
+                'Назначение': 'Анализирует и понимает содержимое изображений',
+                'Статус': 'Работает стабильно',
+                'Возможности': ['Описание изображений', 'Поиск объектов', 'Анализ содержимого'],
+                'Функции': 'Может ответить на вопросы о том, что изображено на фото'
+            },
+            'Транскрибация аудио': {
+                'Назначение': 'Преобразует речь и звуки в письменный текст',
+                'Статус': 'Работает стабильно',
+                'Возможности': ['Расшифровка речи', 'Обработка лекций', 'Перевод интервью в текст'],
+                'Качество': 'Высокая точность распознавания речи'
+            },
+            'OneDrive': {
+                'Назначение': 'Облачное хранилище для работы с файлами и документами',
+                'Статус': 'Интегрировано',
+                'Возможности': ['Синхронизация файлов', 'Доступ к корпоративным данным', 'Совместная работа'],
+                'Провайдер': 'Microsoft OneDrive'
+            },
+            'Чат с SQL данными': {
+                'Назначение': 'Позволяет общаться с базами данных на обычном языке',
+                'Статус': 'Работает стабильно',
+                'Возможности': ['Вопросы к данным на русском языке', 'Автоматическое создание SQL запросов', 'Анализ данных'],
+                'Преимущества': 'Не нужно знать SQL - просто спрашивайте что вас интересует'
+            },
+            'ИИ Агент': {
+                'Назначение': 'Умный помощник для выполнения сложных многоэтапных бизнес-процессов',
+                'Статус': 'Работает стабильно',
+                'Возможности': ['Планирование сложных задач', 'Выполнение последовательности действий', 'Принятие решений', 'Автоматизация воркфлоу'],
+                'Преимущества': 'Может самостоятельно выполнять сложные рабочие процессы от начала до конца'
+            }
+        };
+
+        // Add click functionality to show details
+        services.forEach(service => {
+            service.addEventListener('click', (e) => {
+                const serviceName = e.target.closest('.service').querySelector('.service-name').textContent;
+                const details = serviceDetails[serviceName];
+
+                if (details) {
+                    let detailsHtml = `<h3>${serviceName} - Детали</h3>`;
+                    Object.entries(details).forEach(([key, value]) => {
+                        if (Array.isArray(value)) {
+                            detailsHtml += `<p><strong>${key}:</strong> ${value.join(', ')}</p>`;
+                        } else {
+                            detailsHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+                        }
+                    });
+
+                    // Create modal or update info panel
+                    const existingModal = document.getElementById('service-modal');
+                    if (existingModal) {
+                        existingModal.remove();
+                    }
+
+                    const modal = document.createElement('div');
+                    modal.id = 'service-modal';
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: white;
+                        padding: 30px;
+                        border-radius: 15px;
+                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                        z-index: 2000;
+                        max-width: 500px;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                    `;
+                    modal.innerHTML = detailsHtml + '<button onclick="this.parentElement.remove()" style="margin-top: 20px; padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer;">Закрыть</button>';
+
+                    document.body.appendChild(modal);
+                }
+
+                // Animation
+                e.target.closest('.service').style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    e.target.closest('.service').style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

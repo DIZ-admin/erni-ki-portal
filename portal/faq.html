@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | ERNI-KI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem 0;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+        }
+        .accordion-header:hover {
+            color: var(--primary-color);
+        }
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        .accordion-header.active::after {
+            content: '−';
+        }
+        .accordion-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+        .accordion-content {
+            padding-bottom: 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">ERNI-KI v12.1</span>
+            </div>
+            <nav>
+                <a href="index.html" class="nav-item">🏠 Главная</a>
+                <a href="guides/basics.html" class="nav-item">🚀 Основы</a>
+                <a href="guides/rag.html" class="nav-item">📚 Работа с данными</a>
+                <a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a>
+                <a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
+                <a href="prompts.html" class="nav-item">📂 Библиотека Промптов</a>
+                <a href="faq.html" class="nav-item active">❓ FAQ</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="page-header">
+                <h1>Часто задаваемые вопросы</h1>
+                <p class="lead">Ответы на самые популярные вопросы о безопасности, возможностях и ограничениях.</p>
+            </header>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Где хранятся мои данные?
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="accordion-content">
+                            <p>Все данные хранятся <strong>локально</strong> на серверах компании (On-Premise). Мы не отправляем ваши запросы в облако (OpenAI, Google и т.д.). Это гарантирует полную конфиденциальность коммерческой информации.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Кто видит мои чаты?
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="accordion-content">
+                            <p>Только вы. Доступ к чатам защищен вашей учетной записью (JWT Auth). Администраторы могут видеть только технические логи (нагрузка, ошибки), но не содержимое переписки, если не инициирован аудит безопасности.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Делаются ли резервные копии?
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="accordion-content">
+                            <p>Да, система делает автоматические бэкапы всех данных каждые 24 часа. Если вы случайно удалили важный чат, обратитесь в поддержку для восстановления.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Куда обращаться за помощью?
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="accordion-content">
+                            <p>По техническим вопросам и проблемам с доступом пишите на <a href="mailto:support@erni-ki.local">support@erni-ki.local</a>.</p>
+                            <p>По вопросам безопасности: <a href="mailto:security@erni-ki.local">security@erni-ki.local</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>

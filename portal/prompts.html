@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека Промптов | ERNI-KI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .prompt-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+        .prompt-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .prompt-role {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .role-hr { background: #fce7f3; color: #be185d; }
+        .role-it { background: #e0f2fe; color: #0369a1; }
+        .role-sales { background: #dcfce7; color: #15803d; }
+        .role-mgmt { background: #f3e8ff; color: #7e22ce; }
+        
+        .prompt-text {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #334155;
+            margin: 1rem 0;
+            border: 1px dashed #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">ERNI-KI v12.1</span>
+            </div>
+            <nav>
+                <a href="index.html" class="nav-item">🏠 Главная</a>
+                <a href="guides/basics.html" class="nav-item">🚀 Основы</a>
+                <a href="guides/rag.html" class="nav-item">📚 Работа с данными</a>
+                <a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a>
+                <a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
+                <a href="prompts.html" class="nav-item active">📂 Библиотека Промптов</a>
+                <a href="faq.html" class="nav-item">❓ FAQ</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="page-header">
+                <h1>Корпоративная Библиотека Промптов</h1>
+                <p class="lead">Готовые шаблоны для решения рабочих задач. Просто скопируйте и вставьте.</p>
+            </header>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                
+                <!-- HR Section -->
+                <div class="prompt-card">
+                    <span class="prompt-role role-hr">HR & Recruiting</span>
+                    <h3>Описание вакансии</h3>
+                    <p>Создает привлекательное описание вакансии на основе требований.</p>
+                    <div class="prompt-text">
+                        Действуй как HR-директор IT-компании. Напиши описание вакансии [Название должности].<br>
+                        Требования: [Список требований].<br>
+                        Условия: [Зарплата, офис/удаленка].<br>
+                        Тон: Дружелюбный, но профессиональный. Сделай акцент на инновациях.
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <span class="prompt-role role-hr">HR & Recruiting</span>
+                    <h3>Onboarding план</h3>
+                    <p>План первой недели для нового сотрудника.</p>
+                    <div class="prompt-text">
+                        Составь план адаптации (Onboarding) на первую неделю для [Должность].<br>
+                        Цель: Познакомить с командой, настроить софт, изучить продукт.<br>
+                        Разбей по дням с конкретными задачами.
+                    </div>
+                </div>
+
+                <!-- IT Section -->
+                <div class="prompt-card">
+                    <span class="prompt-role role-it">IT & Dev</span>
+                    <h3>Объясни код</h3>
+                    <p>Помогает понять, что делает сложный кусок кода.</p>
+                    <div class="prompt-text">
+                        Ты — Senior Developer. Объясни, что делает этот код простыми словами:<br>
+                        [Вставьте код]<br>
+                        Найди потенциальные ошибки и предложи оптимизацию.
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <span class="prompt-role role-it">IT & Dev</span>
+                    <h3>Генерация SQL</h3>
+                    <p>Пишет SQL-запросы на естественном языке.</p>
+                    <div class="prompt-text">
+                        У меня есть таблицы: Users (id, name, email) и Orders (id, user_id, amount, date).<br>
+                        Напиши SQL-запрос (PostgreSQL), который найдет топ-5 пользователей по сумме заказов за последний месяц.
+                    </div>
+                </div>
+
+                <!-- Management Section -->
+                <div class="prompt-card">
+                    <span class="prompt-role role-mgmt">Management</span>
+                    <h3>Саммари встречи</h3>
+                    <p>Превращает стенограмму в список задач.</p>
+                    <div class="prompt-text">
+                        Проанализируй стенограмму встречи:<br>
+                        [Текст стенограммы]<br>
+                        1. Краткое резюме (3 буллита).<br>
+                        2. Список принятых решений.<br>
+                        3. Таблица Action Items (Кто, Что, Когда).
+                    </div>
+                </div>
+
+                <!-- Sales Section -->
+                <div class="prompt-card">
+                    <span class="prompt-role role-sales">Sales & Marketing</span>
+                    <h3>Работа с возражениями</h3>
+                    <p>Помогает отвечать трудным клиентам.</p>
+                    <div class="prompt-text">
+                        Клиент говорит: "[Возражение клиента, например: Это слишком дорого]".<br>
+                        Напиши 3 варианта ответа, используя технику "Присоединение -> Аргумент -> Вопрос".<br>
+                        Цель: Назначить демо-встречу.
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>

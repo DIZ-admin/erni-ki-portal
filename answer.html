@@ -1,0 +1,2410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open WebUI - Руководство пользователя</title>
+    <style>
+        :root {
+          /* Primitive Color Tokens */
+          --color-white: rgba(255, 255, 255, 1);
+          --color-black: rgba(0, 0, 0, 1);
+          --color-cream-50: rgba(252, 252, 249, 1);
+          --color-cream-100: rgba(255, 255, 253, 1);
+          --color-gray-200: rgba(245, 245, 245, 1);
+          --color-gray-300: rgba(167, 169, 169, 1);
+          --color-gray-400: rgba(119, 124, 124, 1);
+          --color-slate-500: rgba(98, 108, 113, 1);
+          --color-brown-600: rgba(94, 82, 64, 1);
+          --color-charcoal-700: rgba(31, 33, 33, 1);
+          --color-charcoal-800: rgba(38, 40, 40, 1);
+          --color-slate-900: rgba(19, 52, 59, 1);
+          --color-teal-300: rgba(50, 184, 198, 1);
+          --color-teal-400: rgba(45, 166, 178, 1);
+          --color-teal-500: rgba(33, 128, 141, 1);
+          --color-teal-600: rgba(29, 116, 128, 1);
+          --color-teal-700: rgba(26, 104, 115, 1);
+          --color-teal-800: rgba(41, 150, 161, 1);
+          --color-red-400: rgba(255, 84, 89, 1);
+          --color-red-500: rgba(192, 21, 47, 1);
+          --color-orange-400: rgba(230, 129, 97, 1);
+          --color-orange-500: rgba(168, 75, 47, 1);
+
+          /* RGB versions for opacity control */
+          --color-brown-600-rgb: 94, 82, 64;
+          --color-teal-500-rgb: 33, 128, 141;
+          --color-slate-900-rgb: 19, 52, 59;
+          --color-slate-500-rgb: 98, 108, 113;
+          --color-red-500-rgb: 192, 21, 47;
+          --color-red-400-rgb: 255, 84, 89;
+          --color-orange-500-rgb: 168, 75, 47;
+          --color-orange-400-rgb: 230, 129, 97;
+
+          /* Background color tokens (Light Mode) */
+          --color-bg-1: rgba(59, 130, 246, 0.08);
+          --color-bg-2: rgba(245, 158, 11, 0.08);
+          --color-bg-3: rgba(34, 197, 94, 0.08);
+          --color-bg-4: rgba(239, 68, 68, 0.08);
+          --color-bg-5: rgba(147, 51, 234, 0.08);
+          --color-bg-6: rgba(249, 115, 22, 0.08);
+          --color-bg-7: rgba(236, 72, 153, 0.08);
+          --color-bg-8: rgba(6, 182, 212, 0.08);
+
+          /* Semantic Color Tokens (Light Mode) */
+          --color-background: var(--color-cream-50);
+          --color-surface: var(--color-cream-100);
+          --color-text: var(--color-slate-900);
+          --color-text-secondary: var(--color-slate-500);
+          --color-primary: var(--color-teal-500);
+          --color-primary-hover: var(--color-teal-600);
+          --color-primary-active: var(--color-teal-700);
+          --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+          --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+          --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+          --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+          --color-btn-primary-text: var(--color-cream-50);
+          --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+          --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+          --color-error: var(--color-red-500);
+          --color-success: var(--color-teal-500);
+          --color-warning: var(--color-orange-500);
+          --color-info: var(--color-slate-500);
+          --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+          /* Typography */
+          --font-family-base: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+          --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+          --font-size-xs: 11px;
+          --font-size-sm: 12px;
+          --font-size-base: 14px;
+          --font-size-md: 14px;
+          --font-size-lg: 16px;
+          --font-size-xl: 18px;
+          --font-size-2xl: 20px;
+          --font-size-3xl: 24px;
+          --font-size-4xl: 30px;
+          --font-weight-normal: 400;
+          --font-weight-medium: 500;
+          --font-weight-semibold: 550;
+          --font-weight-bold: 600;
+          --line-height-tight: 1.2;
+          --line-height-normal: 1.5;
+
+          /* Spacing */
+          --space-2: 2px;
+          --space-4: 4px;
+          --space-6: 6px;
+          --space-8: 8px;
+          --space-10: 10px;
+          --space-12: 12px;
+          --space-16: 16px;
+          --space-20: 20px;
+          --space-24: 24px;
+          --space-32: 32px;
+          --space-40: 40px;
+
+          /* Border Radius */
+          --radius-sm: 6px;
+          --radius-base: 8px;
+          --radius-md: 10px;
+          --radius-lg: 12px;
+          --radius-full: 9999px;
+
+          /* Shadows */
+          --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+          --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+          --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+          /* Animation */
+          --duration-fast: 150ms;
+          --duration-normal: 250ms;
+          --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Dark mode colors */
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --color-gray-400-rgb: 119, 124, 124;
+            --color-teal-300-rgb: 50, 184, 198;
+            --color-gray-300-rgb: 167, 169, 169;
+            --color-gray-200-rgb: 245, 245, 245;
+
+            /* Background color tokens (Dark Mode) */
+            --color-bg-1: rgba(29, 78, 216, 0.15);
+            --color-bg-2: rgba(180, 83, 9, 0.15);
+            --color-bg-3: rgba(21, 128, 61, 0.15);
+            --color-bg-4: rgba(185, 28, 28, 0.15);
+            --color-bg-5: rgba(107, 33, 168, 0.15);
+            --color-bg-6: rgba(194, 65, 12, 0.15);
+            --color-bg-7: rgba(190, 24, 93, 0.15);
+            --color-bg-8: rgba(8, 145, 178, 0.15);
+
+            /* Semantic Color Tokens (Dark Mode) */
+            --color-background: var(--color-charcoal-700);
+            --color-surface: var(--color-charcoal-800);
+            --color-text: var(--color-gray-200);
+            --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+            --color-primary: var(--color-teal-300);
+            --color-primary-hover: var(--color-teal-400);
+            --color-primary-active: var(--color-teal-800);
+            --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+            --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+            --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+            --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+            --color-error: var(--color-red-400);
+            --color-success: var(--color-teal-300);
+            --color-warning: var(--color-orange-400);
+            --color-info: var(--color-gray-300);
+            --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+            --color-btn-primary-text: var(--color-slate-900);
+            --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+            --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+          }
+        }
+
+        /* Manual dark mode switch */
+        :root[data-color-scheme="dark"] {
+          color-scheme: dark;
+          --color-background: var(--color-charcoal-700);
+          --color-surface: var(--color-charcoal-800);
+          --color-text: var(--color-gray-200);
+          --color-text-secondary: rgba(245, 245, 245, 0.7);
+          --color-primary: var(--color-teal-300);
+          --color-primary-hover: var(--color-teal-400);
+          --color-primary-active: var(--color-teal-800);
+          --color-secondary: rgba(119, 124, 124, 0.15);
+          --color-secondary-hover: rgba(119, 124, 124, 0.25);
+          --color-secondary-active: rgba(119, 124, 124, 0.3);
+          --color-border: rgba(119, 124, 124, 0.3);
+          --color-btn-primary-text: var(--color-slate-900);
+          --color-card-border: rgba(119, 124, 124, 0.2);
+          --color-card-border-inner: rgba(119, 124, 124, 0.15);
+
+          /* Background color tokens (Dark Mode - manual override) */
+          --color-bg-1: rgba(29, 78, 216, 0.15);
+          --color-bg-2: rgba(180, 83, 9, 0.15);
+          --color-bg-3: rgba(21, 128, 61, 0.15);
+          --color-bg-4: rgba(185, 28, 28, 0.15);
+          --color-bg-5: rgba(107, 33, 168, 0.15);
+          --color-bg-6: rgba(194, 65, 12, 0.15);
+          --color-bg-7: rgba(190, 24, 93, 0.15);
+          --color-bg-8: rgba(8, 145, 178, 0.15);
+        }
+
+        /* Base styles */
+        html {
+          font-size: var(--font-size-base);
+          font-family: var(--font-family-base);
+          line-height: var(--line-height-normal);
+          color: var(--color-text);
+          background-color: var(--color-background);
+          -webkit-font-smoothing: antialiased;
+          box-sizing: border-box;
+        }
+
+        body {
+          margin: 0;
+          padding: 0;
+        }
+
+        *, *::before, *::after {
+          box-sizing: inherit;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+          margin: 0;
+          font-weight: var(--font-weight-semibold);
+          line-height: var(--line-height-tight);
+          color: var(--color-text);
+        }
+
+        h1 { font-size: var(--font-size-4xl); }
+        h2 { font-size: var(--font-size-3xl); }
+        h3 { font-size: var(--font-size-2xl); }
+        h4 { font-size: var(--font-size-xl); }
+
+        p { margin: 0 0 var(--space-16) 0; }
+
+        /* Buttons */
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: var(--space-8) var(--space-16);
+          border-radius: var(--radius-base);
+          font-size: var(--font-size-base);
+          font-weight: 500;
+          cursor: pointer;
+          transition: all var(--duration-normal) var(--ease-standard);
+          border: none;
+          text-decoration: none;
+        }
+
+        .btn--primary {
+          background: var(--color-primary);
+          color: var(--color-btn-primary-text);
+        }
+
+        .btn--primary:hover {
+          background: var(--color-primary-hover);
+        }
+
+        .btn--outline {
+          background: transparent;
+          border: 1px solid var(--color-border);
+          color: var(--color-text);
+        }
+
+        .btn--outline:hover {
+          background: var(--color-secondary);
+        }
+
+        .btn--sm {
+          padding: var(--space-4) var(--space-12);
+          font-size: var(--font-size-sm);
+          border-radius: var(--radius-sm);
+        }
+
+        .btn--lg {
+          padding: var(--space-10) var(--space-20);
+          font-size: var(--font-size-lg);
+          border-radius: var(--radius-md);
+        }
+
+        /* App Container */
+        .app-container {
+          display: flex;
+          min-height: 100vh;
+          background-color: var(--color-background);
+          position: relative;
+        }
+
+        /* Sidebar */
+        .sidebar {
+          width: 340px;
+          background-color: var(--color-surface);
+          border-right: 1px solid var(--color-border);
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          left: 0;
+          top: 0;
+          height: 100vh;
+          z-index: 1000;
+          transition: transform var(--duration-normal) var(--ease-standard);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar-header {
+          padding: var(--space-24) var(--space-20);
+          border-bottom: 1px solid var(--color-border);
+          background: var(--color-bg-1);
+        }
+
+        .logo {
+          font-size: var(--font-size-2xl);
+          font-weight: var(--font-weight-bold);
+          color: var(--color-primary);
+          margin: 0;
+        }
+
+        .subtitle {
+          color: var(--color-text-secondary);
+          font-size: var(--font-size-sm);
+          margin: var(--space-4) 0 0 0;
+          font-weight: var(--font-weight-medium);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+          padding: var(--space-20) var(--space-16);
+          border-bottom: 1px solid var(--color-border);
+          background: var(--color-bg-2);
+        }
+
+        .progress-bar {
+          width: 100%;
+          height: 10px;
+          background-color: var(--color-secondary);
+          border-radius: var(--radius-full);
+          overflow: hidden;
+          margin-bottom: var(--space-12);
+        }
+
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, var(--color-primary), var(--color-teal-400), var(--color-success));
+          width: 0%;
+          transition: width var(--duration-normal) var(--ease-standard);
+        }
+
+        .progress-text {
+          font-size: var(--font-size-sm);
+          color: var(--color-text-secondary);
+          font-weight: var(--font-weight-semibold);
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+          list-style: none;
+          padding: var(--space-8) 0;
+          margin: 0;
+          flex: 1;
+          overflow-y: auto;
+        }
+
+        .nav-menu li {
+          margin: var(--space-2) var(--space-8);
+        }
+
+        .nav-link {
+          display: flex;
+          align-items: center;
+          gap: var(--space-12);
+          width: 100%;
+          padding: var(--space-16);
+          color: var(--color-text);
+          background: transparent;
+          border: none;
+          border-radius: var(--radius-lg);
+          border-left: 3px solid transparent;
+          transition: all var(--duration-fast) var(--ease-standard);
+          font-family: inherit;
+          cursor: pointer;
+          text-align: left;
+          min-height: 70px;
+          position: relative;
+        }
+
+        .nav-icon {
+          font-size: var(--font-size-xl);
+          flex-shrink: 0;
+          width: 32px;
+          text-align: center;
+        }
+
+        .nav-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-4);
+        }
+
+        .nav-title {
+          font-size: var(--font-size-sm);
+          font-weight: var(--font-weight-medium);
+          color: var(--color-text);
+          line-height: 1.3;
+        }
+
+        .nav-meta {
+          display: flex;
+          align-items: center;
+          gap: var(--space-8);
+        }
+
+        .nav-time {
+          font-size: var(--font-size-xs);
+          color: var(--color-text-secondary);
+        }
+
+        .nav-difficulty {
+          font-size: var(--font-size-xs);
+          padding: var(--space-2) var(--space-6);
+          border-radius: var(--radius-full);
+          font-weight: var(--font-weight-medium);
+        }
+
+        .nav-difficulty.easy {
+          background-color: var(--color-bg-3);
+          color: var(--color-success);
+        }
+
+        .nav-difficulty.medium {
+          background-color: var(--color-bg-2);
+          color: var(--color-warning);
+        }
+
+        .nav-difficulty.hard {
+          background-color: var(--color-bg-6);
+          color: var(--color-orange-500);
+        }
+
+        .nav-difficulty.expert {
+          background-color: var(--color-bg-4);
+          color: var(--color-error);
+        }
+
+        .nav-difficulty.all {
+          background-color: var(--color-bg-5);
+          color: var(--color-primary);
+        }
+
+        .nav-link:hover {
+          background-color: var(--color-secondary);
+          transform: translateX(2px);
+        }
+
+        .nav-link.active {
+          background-color: var(--color-bg-1);
+          border-left-color: var(--color-primary);
+          color: var(--color-primary);
+          font-weight: var(--font-weight-medium);
+        }
+
+        .nav-link.completed::after {
+          content: '✓';
+          position: absolute;
+          right: var(--space-16);
+          top: var(--space-8);
+          color: var(--color-success);
+          font-weight: var(--font-weight-bold);
+          font-size: var(--font-size-lg);
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+          padding: var(--space-16);
+          border-top: 1px solid var(--color-border);
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-8);
+          background: var(--color-bg-8);
+        }
+
+        /* Main Content */
+        .main-content {
+          flex: 1;
+          margin-left: 340px;
+          padding: var(--space-32) var(--space-40);
+          max-width: 1000px;
+          min-height: 100vh;
+        }
+
+        /* Section Styles */
+        .section {
+          opacity: 1;
+          transition: opacity var(--duration-normal) var(--ease-standard);
+        }
+
+        .section.hidden {
+          display: none;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+          text-align: center;
+          padding-top: var(--space-32);
+        }
+
+        .welcome-content h1 {
+          margin-bottom: var(--space-20);
+          color: var(--color-text);
+          font-size: var(--font-size-4xl);
+          background: linear-gradient(135deg, var(--color-primary), var(--color-teal-400));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .welcome-description {
+          font-size: var(--font-size-lg);
+          color: var(--color-text-secondary);
+          margin-bottom: var(--space-32);
+          line-height: 1.7;
+          max-width: 700px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .welcome-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--space-24);
+          margin-bottom: var(--space-40);
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .stat-item {
+          text-align: center;
+          padding: var(--space-20);
+          background-color: var(--color-bg-1);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+          transition: transform var(--duration-fast) var(--ease-standard);
+        }
+
+        .stat-item:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+          font-size: var(--font-size-3xl);
+          font-weight: var(--font-weight-bold);
+          color: var(--color-primary);
+          margin-bottom: var(--space-8);
+        }
+
+        .stat-label {
+          font-size: var(--font-size-sm);
+          color: var(--color-text-secondary);
+          font-weight: var(--font-weight-medium);
+        }
+
+        /* Content Sections */
+        .content-section {
+          animation: fadeInSlide 0.4s ease-out;
+        }
+
+        @keyframes fadeInSlide {
+          from {
+            opacity: 0;
+            transform: translateY(var(--space-20));
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: var(--space-32);
+          padding-bottom: var(--space-20);
+          border-bottom: 2px solid var(--color-border);
+        }
+
+        .section-header h2 {
+          margin: 0;
+          color: var(--color-text);
+          font-size: var(--font-size-3xl);
+        }
+
+        .section-meta {
+          display: flex;
+          align-items: center;
+          gap: var(--space-12);
+        }
+
+        .section-number {
+          background: linear-gradient(135deg, var(--color-primary), var(--color-teal-400));
+          color: white;
+          padding: var(--space-8) var(--space-16);
+          border-radius: var(--radius-full);
+          font-size: var(--font-size-sm);
+          font-weight: var(--font-weight-bold);
+        }
+
+        /* Features Grid */
+        .features-list {
+          display: grid;
+          gap: var(--space-20);
+          margin-bottom: var(--space-40);
+        }
+
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: var(--space-20);
+          padding: var(--space-24);
+          background: linear-gradient(135deg, var(--color-bg-1), var(--color-bg-2));
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+          transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .feature-item:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+          font-size: 2rem;
+          flex-shrink: 0;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--color-bg-3);
+          border-radius: var(--radius-lg);
+        }
+
+        /* Process Steps */
+        .process-steps {
+          display: grid;
+          gap: var(--space-16);
+          margin-bottom: var(--space-40);
+        }
+
+        .step-item {
+          display: flex;
+          gap: var(--space-16);
+          padding: var(--space-20);
+          background: var(--color-surface);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+        }
+
+        .step-number {
+          flex-shrink: 0;
+          width: 40px;
+          height: 40px;
+          background: var(--color-primary);
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: var(--font-weight-bold);
+        }
+
+        .step-content strong {
+          display: block;
+          margin-bottom: var(--space-8);
+          color: var(--color-text);
+        }
+
+        .step-content p {
+          color: var(--color-text-secondary);
+          margin: 0;
+        }
+
+        /* Tips Section */
+        .tips-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: var(--space-16);
+        }
+
+        .tip-card {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--space-12);
+          padding: var(--space-16);
+          background: var(--color-bg-3);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+          transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .tip-card:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+
+        .tip-emoji {
+          font-size: var(--font-size-lg);
+          flex-shrink: 0;
+        }
+
+        /* Navigation Controls */
+        .navigation-controls {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: var(--space-40);
+          padding-top: var(--space-24);
+          border-top: 1px solid var(--color-border);
+        }
+
+        .navigation-controls .btn {
+          min-width: 160px;
+        }
+
+        /* Quiz Styles */
+        .quiz-instructions {
+          text-align: center;
+          padding: var(--space-40);
+          background: var(--color-bg-1);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+        }
+
+        .quiz-info {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: var(--space-20);
+          margin-bottom: var(--space-40);
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .quiz-info-item {
+          display: flex;
+          align-items: center;
+          gap: var(--space-16);
+          padding: var(--space-20);
+          background: var(--color-surface);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+        }
+
+        .quiz-info-icon {
+          font-size: 1.5rem;
+          flex-shrink: 0;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--color-bg-3);
+          border-radius: var(--radius-base);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+          .sidebar {
+            width: 320px;
+            transform: translateX(-100%);
+          }
+
+          .sidebar.open {
+            transform: translateX(0);
+          }
+
+          .main-content {
+            margin-left: 0;
+            padding: var(--space-20) var(--space-16);
+          }
+
+          .mobile-menu-toggle {
+            display: flex;
+          }
+
+          .welcome-stats {
+            grid-template-columns: 1fr;
+            gap: var(--space-16);
+          }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+          display: none;
+          position: fixed;
+          top: var(--space-16);
+          left: var(--space-16);
+          z-index: 1001;
+          background-color: var(--color-surface);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-base);
+          padding: var(--space-8);
+          cursor: pointer;
+          flex-direction: column;
+          width: 44px;
+          height: 44px;
+          justify-content: center;
+          align-items: center;
+          box-shadow: var(--shadow-md);
+        }
+
+        .mobile-menu-toggle span {
+          display: block;
+          width: 22px;
+          height: 2px;
+          background-color: var(--color-text);
+          margin: 3px 0;
+          transition: transform var(--duration-fast) var(--ease-standard);
+          border-radius: 1px;
+        }
+
+        /* Utility classes */
+        .hidden { display: none; }
+        .or-text {
+          margin-top: var(--space-16);
+          color: var(--color-text-secondary);
+          font-size: var(--font-size-sm);
+        }
+
+        code {
+          font-family: var(--font-family-mono);
+          background: var(--color-secondary);
+          padding: var(--space-4) var(--space-6);
+          border-radius: var(--radius-sm);
+          font-size: calc(var(--font-size-base) * 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Open WebUI</h1>
+                <p class="subtitle">Руководство пользователя
+                  <span id="lastUpdated" style="display:block;font-size:12px;opacity:.8;margin-top:4px;">
+                      Обновлено: 10 августа 2025
+                  </span>
+                </p>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">0/10 разделов</span>
+            </div>
+
+            <!-- Search Field -->
+            <input type="search" id="navSearch" placeholder="Поиск по разделам…" style="margin: 12px 16px; padding: 10px 12px; width: calc(100% - 32px); border: 1px solid var(--color-border); border-radius: 8px;">
+
+            <ul class="nav-menu" id="navMenu">
+                <li><button class="nav-link" data-section="intro">
+                    <span class="nav-icon">📚</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Введение в Open WebUI</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">15 мин</span>
+                            <span class="nav-difficulty easy">Начальный</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="first-steps">
+                    <span class="nav-icon">🚀</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Первые шаги</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">18 мин</span>
+                            <span class="nav-difficulty easy">Начальный</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="interface">
+                    <span class="nav-icon">🖥️</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Интерфейс и навигация</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">25 мин</span>
+                            <span class="nav-difficulty medium">Средний</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="models">
+                    <span class="nav-icon">🧠</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Модели ИИ и оптимизация</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">30 мин</span>
+                            <span class="nav-difficulty medium">Средний</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="tools">
+                    <span class="nav-icon">🛠️</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Инструменты и функции</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">35 мин</span>
+                            <span class="nav-difficulty hard">Продвинутый</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="chat">
+                    <span class="nav-icon">💬</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Чат и промпт-инжиниринг</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">25 мин</span>
+                            <span class="nav-difficulty medium">Средний</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="documents">
+                    <span class="nav-icon">📄</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Документы и RAG</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">40 мин</span>
+                            <span class="nav-difficulty hard">Продвинутый</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Настройки и конфигурация</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">30 мин</span>
+                            <span class="nav-difficulty hard">Продвинутый</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="tips">
+                    <span class="nav-icon">💡</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Продвинутые техники</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">35 мин</span>
+                            <span class="nav-difficulty expert">Экспертный</span>
+                        </div>
+                    </div>
+                </button></li>
+                <li><button class="nav-link" data-section="quiz">
+                    <span class="nav-icon">🎯</span>
+                    <div class="nav-content">
+                        <div class="nav-title">Проверка знаний</div>
+                        <div class="nav-meta">
+                            <span class="nav-time">25 мин</span>
+                            <span class="nav-difficulty all">Все уровни</span>
+                        </div>
+                    </div>
+                </button></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button class="btn btn--outline btn--sm" id="resetProgress">Сбросить прогресс</button>
+                <button class="btn btn--outline btn--sm" id="toggleTheme">🌓 Тема</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div class="section welcome-section" id="welcome">
+                <div class="welcome-content">
+                    <h1>Добро пожаловать в Open WebUI</h1>
+                    <p class="welcome-description">
+                        Это расширенное руководство — ваш проводник по работе с Open WebUI. Пройдите все разделы, чтобы освоить платформу и научиться использовать ИИ-модели эффективно.
+                    </p>
+                    <div class="welcome-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">Разделов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Советов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Вопросов в тесте</div>
+                        </div>
+                    </div>
+                    <div class="welcome-actions">
+                        <button class="btn btn--primary btn--lg" id="startLearning">Начать обучение</button>
+                        <p class="or-text">или выберите раздел в меню слева</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 1: Introduction -->
+            <div class="section content-section hidden" id="intro">
+                <div class="section-header">
+                    <h2>Введение в Open WebUI</h2>
+                    <div class="section-meta">
+                        <span class="section-number">1/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Open WebUI — это современная веб‑платформа для работы с большими языковыми моделями. Приложение работает локально, обеспечивая конфиденциальность данных и полный контроль над рабочими процессами.</p>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🏠</div>
+                            <div class="feature-content">
+                                <strong>Самостоятельный хостинг</strong>
+                                <span>Вы управляете данными и приватностью на своём устройстве</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🤖</div>
+                            <div class="feature-content">
+                                <strong>Широкий выбор моделей</strong>
+                                <span>Поддержка Ollama, OpenAI API, Anthropic Claude и других</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎨</div>
+                            <div class="feature-content">
+                                <strong>Интуитивный интерфейс</strong>
+                                <span>Современный дизайн с режимами темной и светлой темы</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📄</div>
+                            <div class="feature-content">
+                                <strong>RAG (Retrieval Augmented Generation)</strong>
+                                <span>Работа с документами и базами знаний для точных ответов</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚙️</div>
+                            <div class="feature-content">
+                                <strong>Гибкость и расширяемость</strong>
+                                <span>Пользовательские инструменты, функции и интеграции</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">👥</div>
+                            <div class="feature-content">
+                                <strong>Несколько пользователей</strong>
+                                <span>Платформа поддерживает работу нескольких пользователей</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-info">
+                        <h4>🔒 Безопасность и лицензия</h4>
+                        <div class="security-list" style="display:grid;gap:var(--space-16);">
+                            <div class="security-item">
+                                <strong>Лицензия: Open WebUI License</strong>
+                                <p>Проект распространяется под собственной BSD‑подобной лицензией с бренд‑ограничением.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Приватность данных</strong>
+                                <p>Все чаты и базы знаний хранятся локально. Подключая внешние API, учитывайте их политику.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>HTTPS</strong>
+                                <p>Интерфейс слушает HTTP на порту 8080; для защищенного доступа используйте прокси с сертификатами.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-requirements">
+                        <h4>💻 Системные требования</h4>
+                        <div class="requirements-grid" style="display:grid;gap:var(--space-16);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+                            <div class="req-item">
+                                <strong>Минимальные:</strong>
+                                <ul>
+                                    <li>4GB RAM</li>
+                                    <li>2 CPU ядра</li>
+                                    <li>10GB свободного места</li>
+                                    <li>Docker 20.10+</li>
+                                    <li>Открытый порт 8080</li>
+                                </ul>
+                            </div>
+                            <div class="req-item">
+                                <strong>Рекомендуемые:</strong>
+                                <ul>
+                                    <li>16GB+ RAM</li>
+                                    <li>8+ CPU ядер</li>
+                                    <li>100GB+ SSD</li>
+                                    <li>NVIDIA GPU (опционально)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>💡 Ключевые преимущества</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔒</span>
+                                <span>Данные остаются только на вашем устройстве</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🌐</span>
+                                <span>Работа возможна без подключения к интернету</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🚀</span>
+                                <span>Поддерживает локальные и облачные модели</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⚡</span>
+                                <span>Легко разворачивается через Docker</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🎯</span>
+                                <span>Активное сообщество и частые обновления</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔧</span>
+                                <span>Поддержка Python‑плагинов и расширений</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: First Steps -->
+            <div class="section content-section hidden" id="first-steps">
+                <div class="section-header">
+                    <h2>Первые шаги</h2>
+                    <div class="section-meta">
+                        <span class="section-number">2/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Начните работу с Open WebUI с входа и настройки аккаунта. В этом разделе приведены основные шаги входа и советы по устранению распространённых ошибок.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Получите URL платформы</strong>
+                                <p>Введите адрес, который предоставит вам ваша организация (например, http://your-domain:8080).</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Войдите с корпоративным аккаунтом</strong>
+                                <p>Используйте корпоративные учётные данные или систему единого входа (SSO) для авторизации.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="troubleshooting">
+                        <h4>🔧 Решение проблем</h4>
+                        <div class="trouble-list" style="display:grid;gap:var(--space-16);">
+                            <div class="trouble-item">
+                                <strong>«Connection refused» или «ERR_CONNECTION_REFUSED»</strong>
+                                <p>Проверьте, что адрес и порт указаны правильно, а сервер запущен.</p>
+                            </div>
+                            <div class="trouble-item">
+                                <strong>«This site can't be reached»</strong>
+                                <p>Проблемы с сетью или DNS. Попробуйте зайти по IP‑адресу.</p>
+                            </div>
+                            <div class="trouble-item">
+                                <strong>«Invalid credentials»</strong>
+                                <p>Неверный email или пароль. Проверьте раскладку клавиатуры и Caps Lock.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>💡 Полезные советы</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔐</span>
+                                <span>Используйте корпоративные учётные данные для входа</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔄</span>
+                                <span>При проблемах очистите кэш браузера (Ctrl+Shift+Del)</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🌐</span>
+                                <span>Используйте современный браузер (Chrome, Firefox)</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📱</span>
+                                <span>Интерфейс адаптирован для мобильных устройств</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Interface -->
+            <div class="section content-section hidden" id="interface">
+                <div class="section-header">
+                    <h2>Интерфейс и навигация</h2>
+                    <div class="section-meta">
+                        <span class="section-number">3/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Изучите основные элементы интерфейса Open WebUI и настройте его под свои предпочтения. Узнайте о скрытых функциях и горячих клавишах для повышения продуктивности.</p>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📋</div>
+                            <div class="feature-content">
+                                <strong>Левая панель</strong>
+                                <span>История чатов с поиском и фильтрами, кнопка «Новый чат» и архивирование</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚙️</div>
+                            <div class="feature-content">
+                                <strong>Верхняя панель</strong>
+                                <span>Выбор модели, дополнительные настройки, шаринг и экспорт диалогов</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💬</div>
+                            <div class="feature-content">
+                                <strong>Область чата</strong>
+                                <span>Сообщения с поддержкой Markdown, код-блоков и таблиц</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✍️</div>
+                            <div class="feature-content">
+                                <strong>Поле ввода</strong>
+                                <span>Автодополнение, команды, вложения и голосовой ввод</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-info">
+                        <h4>🔍 Скрытые функции</h4>
+                        <div class="security-list" style="display:grid;gap:var(--space-16);">
+                            <div class="security-item">
+                                <strong>F11 — Полноэкранный режим</strong>
+                                <p>Уберите лишние элементы для максимальной концентрации.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Ctrl+K — Быстрые команды</strong>
+                                <p>Вызов палитры команд для быстрого доступа к функциям.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Ctrl+D — Дублировать чат</strong>
+                                <p>Создаёт копию текущего чата для экспериментов.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Двойной клик по заголовку</strong>
+                                <p>Быстрое переименование чата.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>⌨️ Горячие клавиши</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">⌨️</span>
+                                <span><code>Ctrl + Enter</code> — отправить сообщение</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⌨️</span>
+                                <span><code>Shift + Enter</code> — новая строка</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⌨️</span>
+                                <span><code>Ctrl + /</code> — поиск по чатам</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⌨️</span>
+                                <span><code>Ctrl + N</code> — новый чат</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⌨️</span>
+                                <span><code>Esc</code> — остановить генерацию</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⌨️</span>
+                                <span><code>Ctrl + ↑/↓</code> — навигация по истории запросов</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Models -->
+            <div class="section content-section hidden" id="models">
+                <div class="section-header">
+                    <h2>Модели ИИ и оптимизация</h2>
+                    <div class="section-meta">
+                        <span class="section-number">4/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Выберите подходящую модель для задач различной сложности и оптимизируйте параметры генерации для максимальной эффективности.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Откройте список моделей</strong>
+                                <p>В верхней панели нажмите на название текущей модели, чтобы увидеть список доступных.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Просмотрите параметры</strong>
+                                <p>Каждая модель имеет описание и характеристики — время отклика, стоимость (для облачных), объём памяти и т.д.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Выберите модель</strong>
+                                <p>Подберите модель под задачу: GPT-4 для сложных, более быстрые модели для общего чата.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Временное переключение</strong>
+                                <p>С помощью символа <code>@</code> можно временно вызвать другую модель прямо в чате.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-requirements">
+                        <h4>🎛️ Параметры моделей</h4>
+                        <div class="requirements-grid" style="display:grid;gap:var(--space-16);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+                            <div class="req-item">
+                                <strong>Temperature (0–2)</strong>
+                                <p>Определяет случайность: низкие значения — детерминированные ответы, высокие — более творческие.</p>
+                            </div>
+                            <div class="req-item">
+                                <strong>Top P (0–1)</strong>
+                                <p>Nucleus sampling — доля вероятности для выбора слов. 0.9 считается хорошим компромиссом.</p>
+                            </div>
+                            <div class="req-item">
+                                <strong>Max Tokens</strong>
+                                <p>Максимальная длина ответа. Больше токенов — детальнее ответ, но дольше время генерации.</p>
+                            </div>
+                            <div class="req-item">
+                                <strong>Presence Penalty</strong>
+                                <p>Штраф за повторение тем. Позволяет разнообразить ответы.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>🧠 Рекомендации по выбору моделей</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🧠</span>
+                                <span>GPT‑4 подходит для анализа и творческих задач</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⚡</span>
+                                <span>Быстрые модели лучше для коротких вопросов и чатов</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔄</span>
+                                <span>Экспериментируйте — иногда простая модель справится не хуже</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">💰</span>
+                                <span>Помните о стоимости вызовов облачных моделей</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📊</span>
+                                <span>Локальные модели медленнее, но защищают конфиденциальность</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🎯</span>
+                                <span>Специализированные модели точнее в узких областях</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Tools -->
+            <div class="section content-section hidden" id="tools">
+                <div class="section-header">
+                    <h2>Инструменты и функции</h2>
+                    <div class="section-meta">
+                        <span class="section-number">5/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Инструменты расширяют возможности чат‑модели: можно искать информацию, генерировать изображения, запускать код и анализировать данные.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Понимание инструментов</strong>
+                                <p>Инструменты — это скрипты, которые позволяют модели выполнять действия за пределами текста.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Установка популярных инструментов</strong>
+                                <p>Доступны веб‑поиск, генерация изображений, исполнение Python и др. Устанавливайте инструменты из проверенных источников.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Включение инструментов</strong>
+                                <p>Нажмите «+» в поле ввода или включите их в Workspace → Models.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Режимы использования</strong>
+                                <p><b>Default</b> — работает с любыми моделями, <b>Native</b> — использует нативное function calling (быстрее и стабильнее на поддерживаемых моделях).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🌐</div>
+                            <div class="feature-content">
+                                <strong>Веб‑поиск</strong>
+                                <span>Позволяет получить актуальную информацию из интернета через API</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎨</div>
+                            <div class="feature-content">
+                                <strong>Генерация изображений</strong>
+                                <span>Создание картинок с помощью DALL‑E, Midjourney или локальных моделей</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💻</div>
+                            <div class="feature-content">
+                                <strong>Выполнение кода</strong>
+                                <span>Запуск кода в изолированной среде (Python, JavaScript и др.)</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-content">
+                                <strong>Анализ данных</strong>
+                                <span>Работа с CSV, Excel, создание графиков и статистический анализ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>💡 Лучшие практики</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🌐</span>
+                                <span>Веб‑поиск добавляет актуальные данные к ответам модели</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🎨</span>
+                                <span>Для генерации изображений пишите детальные промпты</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⚠️</span>
+                                <span>Устанавливайте инструменты только из доверенных источников</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔧</span>
+                                <span>Native‑режим быстрее, но требует совместимую модель</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🛡️</span>
+                                <span>Тестируйте новые инструменты в безопасной среде</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📋</span>
+                                <span>Документируйте собственные инструменты</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Chat -->
+            <div class="section content-section hidden" id="chat">
+                <div class="section-header">
+                    <h2>Чат и промпт‑инжиниринг</h2>
+                    <div class="section-meta">
+                        <span class="section-number">6/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Секреты эффективного общения с ИИ: формулирование запросов, использование системных сообщений и продвинутые техники промпт‑инжиниринга.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Формулируйте чётко</strong>
+                                <p>Чем конкретнее запрос, тем точнее ответ.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Контекст важен</strong>
+                                <p>Ссылайтесь на предыдущие сообщения для поддержания связности диалога.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Используйте системные промпты</strong>
+                                <p>Системные сообщения помогают задать роль модели или ограничить её поведение.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Техники промпт‑инжиниринга</strong>
+                                <p>Используйте цепочки рассуждений, Few‑Shot примеры и ролевую игру для более точных результатов.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-info">
+                        <h4>🎭 Продвинутые техники</h4>
+                        <div class="security-list" style="display:grid;gap:var(--space-16);">
+                            <div class="security-item">
+                                <strong>Chain‑of‑Thought</strong>
+                                <p>Попросите модель объяснить ход рассуждений по шагам.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Few‑Shot Learning</strong>
+                                <p>Приводите 2‑3 примера желаемого формата перед вопросом.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Role‑Playing</strong>
+                                <p>Задайте роль модели: например, «Ты — эксперт по маркетингу».</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Self‑Consistency</strong>
+                                <p>Запросите несколько вариантов ответа и выберите лучший.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>💬 Лайфхаки для общения</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">💬</span>
+                                <span>Длинные диалоги помогают модели лучше понимать контекст</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📝</span>
+                                <span>Сохраняйте важные ответы через экспорт диалогов</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔄</span>
+                                <span>Переформулировка вопроса может улучшить результат</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🎯</span>
+                                <span>Указывайте желаемый формат: список, таблица, код</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🎨</span>
+                                <span>Метки Markdown поддерживаются в сообщениях</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🎭</span>
+                                <span>Используйте роли для получения специализированных ответов</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Documents -->
+            <div class="section content-section hidden" id="documents">
+                <div class="section-header">
+                    <h2>Документы и RAG</h2>
+                    <div class="section-meta">
+                        <span class="section-number">7/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Загружайте документы и создавайте коллекции знаний. Настройте индексирование и параметры RAG для улучшения качества ответов.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Создайте коллекцию</strong>
+                                <p>В разделе Workspace → Knowledge нажмите «New Collection» и задайте название.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Загрузите документы</strong>
+                                <p>Поддерживаются PDF, DOCX, TXT/MD, CSV, PPTX, HTML. Для сложных файлов подключите Docling/Tika и OCR.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Чанкинг и индексация</strong>
+                                <p>Рекомендуемые значения: <code>CHUNK_SIZE</code> ≈ 800–1200, <code>CHUNK_OVERLAP</code> ≈ 100–200 символов.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Эмбеддинги</strong>
+                                <p>Выберите движок: SentenceTransformers (по умолчанию), Ollama, OpenAI. Модель по умолчанию — <code>all‑MiniLM‑L6‑v2</code>.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <strong>Поиск и ранжирование</strong>
+                                <p>Включите гибридный поиск: <code>ENABLE_RAG_HYBRID_SEARCH=True</code>, настройте <code>RAG_TOP_K</code> и пороги релевантности.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <strong>Использование в чате</strong>
+                                <p>Добавьте коллекцию в диалог через символ <code>#</code> или настройте её в профиле модели (Workspace → Models → RAG).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-requirements">
+                        <h4>📄 Поддерживаемые форматы</h4>
+                        <div class="requirements-grid" style="display:grid;gap:var(--space-16);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+                            <div class="req-item">
+                                <strong>PDF/TIFF</strong>
+                                <p>Поддержка текстовых и сканированных файлов через Docling/Tika и OCR.</p>
+                            </div>
+                            <div class="req-item">
+                                <strong>DOCX/TXT/MD</strong>
+                                <p>Полное извлечение текстов и таблиц.</p>
+                            </div>
+                            <div class="req-item">
+                                <strong>CSV</strong>
+                                <p>Табличные данные с автоматическим определением заголовков.</p>
+                            </div>
+                            <div class="req-item">
+                                <strong>HTML/URL/YouTube</strong>
+                                <p>Загрузка веб‑страниц и видео с очисткой от разметки.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>📚 Лучшие практики RAG</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🏷️</span>
+                                <span>Сохраняйте метаданные — источник и раздел помогут в цитировании</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔀</span>
+                                <span>Гибридный поиск снижает пропуски, rerank — уменьшает шум</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🧪</span>
+                                <span>Экспериментируйте с <code>TOP_K</code> и порогами на реальных вопросах</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">♻️</span>
+                                <span>Переиндексируйте коллекции после обновления документов</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Settings -->
+            <div class="section content-section hidden" id="settings">
+                <div class="section-header">
+                    <h2>Настройки и конфигурация</h2>
+                    <div class="section-meta">
+                        <span class="section-number">8/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Настройте интерфейс под свои предпочтения: язык, тему, компактность и голосовой ввод. Здесь собраны только пользовательские параметры — системные настройки уже заданы автоматически.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Откройте меню настроек</strong>
+                                <p>Нажмите на аватар в левом нижнем углу и выберите «Settings».</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Настройки интерфейса</strong>
+                                <p>Выберите язык, тему (светлая/тёмная/авто) и модель по умолчанию.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Отображение</strong>
+                                <p>Настройте размер шрифта, компактный режим и плотность интерфейса.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Голосовой ввод</strong>
+                                <p>Включите голосовой ввод, чтобы диктовать сообщения в чате.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>⚙️ Советы по оптимизации</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🌙</span>
+                                <span>Тёмная тема уменьшает нагрузку на глаза вечером</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">💾</span>
+                                <span>Регулярно экспортируйте важные настройки и чаты</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔊</span>
+                                <span>Голосовой ввод ускоряет работу на мобильных устройствах</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⚡</span>
+                                <span>Компактный режим помещает больше информации на экран</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔐</span>
+                                <span>Храните приватные данные в менеджере паролей</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📊</span>
+                                <span>Следите за производительностью через Docker stats (если доступно)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 9: Tips -->
+            <div class="section content-section hidden" id="tips">
+                <div class="section-header">
+                    <h2>Продвинутые техники</h2>
+                    <div class="section-meta">
+                        <span class="section-number">9/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Узнайте о методах автоматизации, интеграциях через API и мониторинге. Эти техники предназначены для опытных пользователей, которые хотят выжать максимум из Open WebUI.</p>
+
+                    <div class="process-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Автоматизация процессов</strong>
+                                <p>Создавайте скрипты для повторяющихся задач и пакетной обработки документов.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>API‑интеграции</strong>
+                                <p>Используйте REST‑эндпоинты, WebSocket и Webhook‑уведомления для интеграции с другими системами.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Мониторинг</strong>
+                                <p>Анализируйте логи и метрики, настраивайте уведомления о проблемах.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Шаблоны промптов</strong>
+                                <p>Создайте библиотеку шаблонов для частых задач, чтобы ускорить работу.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-info">
+                        <h4>🤖 Автоматизация</h4>
+                        <div class="security-list" style="display:grid;gap:var(--space-16);">
+                            <div class="security-item">
+                                <strong>Batch загрузка</strong>
+                                <p>Используйте скрипты для массовой загрузки и индексирования документов.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Планировщик задач</strong>
+                                <p>Настраивайте cron или таймеры для регулярного обновления и очистки данных.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Workflow Automation</strong>
+                                <p>Интегрируйте с Zapier/IFTTT для автоматического создания чатов или отправки уведомлений.</p>
+                            </div>
+                            <div class="security-item">
+                                <strong>Отчётность</strong>
+                                <p>Создавайте автоматические отчёты об использовании и производительности.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h4>🚀 Лайфхаки</h4>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-emoji">🚀</span>
+                                <span>Используйте <code>@</code> для быстрого переключения моделей</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📋</span>
+                                <span>Создайте библиотеку готовых промптов для типовых запросов</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🔗</span>
+                                <span>Интегрируйте платформу с вашими системами через API</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">📊</span>
+                                <span>Отслеживайте метрики использования для оптимизации</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">🛠️</span>
+                                <span>Создавайте собственные инструменты для специфичных задач</span>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-emoji">⏱️</span>
+                                <span>Группируйте похожие запросы в батчи для экономии времени</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="section content-section hidden" id="quiz">
+                <div class="section-header">
+                    <h2>Проверка знаний</h2>
+                    <div class="section-meta">
+                        <span class="section-number">10/10</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <div class="quiz-instructions" id="quizInstructions">
+                        <p>Пройдите тест, чтобы закрепить знания. Отвечайте без ограничений по времени.</p>
+                        <div class="quiz-info">
+                            <div class="quiz-info-item">
+                                <div class="quiz-info-icon">❓</div>
+                                <div class="quiz-info-content">
+                                    <strong>10 вопросов</strong>
+                                    <span>Разные типы вопросов</span>
+                                </div>
+                            </div>
+                            <div class="quiz-info-item">
+                                <div class="quiz-info-icon">⏱️</div>
+                                <div class="quiz-info-content">
+                                    <strong>Без таймера</strong>
+                                    <span>Обдумывайте ответы</span>
+                                </div>
+                            </div>
+                            <div class="quiz-info-item">
+                                <div class="quiz-info-icon">📊</div>
+                                <div class="quiz-info-content">
+                                    <strong>Мгновенные результаты</strong>
+                                    <span>Сразу после прохождения</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn--primary btn--lg" id="startQuizBtn">Начать тест</button>
+                    </div>
+
+                    <div class="quiz-question hidden" id="quizContainer">
+                        <div id="quiz"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="navigation-controls hidden" id="navControls">
+                <button class="btn btn--outline" id="prevBtn">← Назад</button>
+                <button class="btn btn--primary" id="nextBtn">Далее →</button>
+            </div>
+        </main>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+<script>
+    // Tutorial Application Class
+    class TutorialApp {
+        constructor() {
+            this.currentSection = 'welcome';
+            this.completedSections = new Set();
+            this.sections = [
+                'intro', 'first-steps', 'interface', 'models', 'tools',
+                'chat', 'documents', 'settings', 'tips', 'quiz'
+            ];
+            this.isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            this.init();
+        }
+
+        init() {
+            this.setupEventListeners();
+            this.loadProgress();
+            this.updateProgressBar();
+            this.initializeQuiz();
+            this.setupMobileMenu();
+        }
+
+        setupEventListeners() {
+            // Navigation buttons
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const section = e.currentTarget.dataset.section;
+                    this.showSection(section);
+                });
+            });
+
+            // Start learning button
+            document.getElementById('startLearning')?.addEventListener('click', () => {
+                this.showSection('intro');
+            });
+
+            // Navigation controls
+            document.getElementById('prevBtn')?.addEventListener('click', () => {
+                this.navigateSection(-1);
+            });
+
+            document.getElementById('nextBtn')?.addEventListener('click', () => {
+                this.navigateSection(1);
+            });
+
+            // Theme toggle
+            document.getElementById('toggleTheme')?.addEventListener('click', () => {
+                this.toggleTheme();
+            });
+
+            // Reset progress
+            document.getElementById('resetProgress')?.addEventListener('click', () => {
+                this.resetProgress();
+            });
+
+            // Search field
+            const navSearch = document.getElementById('navSearch');
+            if (navSearch) {
+                navSearch.addEventListener('input', () => {
+                    const q = navSearch.value.toLowerCase().trim();
+                    document.querySelectorAll('.nav-menu .nav-link').forEach(btn => {
+                        const title = btn.querySelector('.nav-title')?.textContent.toLowerCase() || '';
+                        btn.parentElement.style.display = title.includes(q) ? '' : 'none';
+                    });
+                });
+            }
+        }
+
+        showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                this.currentSection = sectionId;
+
+                // Update navigation
+                this.updateNavigation();
+                this.updateNavigationControls();
+
+                // Mark as completed if it's a content section
+                if (this.sections.includes(sectionId)) {
+                    this.markSectionCompleted(sectionId);
+                }
+
+                // Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        updateNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === this.currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        updateNavigationControls() {
+            const navControls = document.getElementById('navControls');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (this.currentSection === 'welcome') {
+                navControls?.classList.add('hidden');
+                return;
+            }
+
+            navControls?.classList.remove('hidden');
+
+            const currentIndex = this.sections.indexOf(this.currentSection);
+
+            // Update prev button
+            if (prevBtn) {
+                if (currentIndex <= 0) {
+                    prevBtn.disabled = true;
+                    prevBtn.style.opacity = '0.5';
+                } else {
+                    prevBtn.disabled = false;
+                    prevBtn.style.opacity = '1';
+                }
+            }
+
+            // Update next button
+            if (nextBtn) {
+                if (currentIndex >= this.sections.length - 1) {
+                    nextBtn.disabled = true;
+                    nextBtn.style.opacity = '0.5';
+                } else {
+                    nextBtn.disabled = false;
+                    nextBtn.style.opacity = '1';
+                }
+            }
+        }
+
+        navigateSection(direction) {
+            const currentIndex = this.sections.indexOf(this.currentSection);
+            const newIndex = currentIndex + direction;
+
+            if (newIndex >= 0 && newIndex < this.sections.length) {
+                this.showSection(this.sections[newIndex]);
+            }
+        }
+
+        markSectionCompleted(sectionId) {
+            this.completedSections.add(sectionId);
+            this.saveProgress();
+            this.updateProgressBar();
+
+            // Add completed visual indicator
+            const navLink = document.querySelector(`[data-section="${sectionId}"]`);
+            if (navLink) {
+                navLink.classList.add('completed');
+            }
+        }
+
+        updateProgressBar() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+
+            const completed = this.completedSections.size;
+            const total = this.sections.length;
+            const percentage = (completed / total) * 100;
+
+            if (progressFill) {
+                progressFill.style.width = `${percentage}%`;
+            }
+
+            if (progressText) {
+                progressText.textContent = `${completed}/${total} разделов`;
+            }
+        }
+
+        saveProgress() {
+            const progress = {
+                completedSections: Array.from(this.completedSections),
+                currentSection: this.currentSection
+            };
+            localStorage.setItem('openwebui-tutorial-progress', JSON.stringify(progress));
+        }
+
+        loadProgress() {
+            try {
+                const saved = localStorage.getItem('openwebui-tutorial-progress');
+                if (saved) {
+                    const progress = JSON.parse(saved);
+                    this.completedSections = new Set(progress.completedSections || []);
+                    // Mark completed sections visually
+                    this.completedSections.forEach(sectionId => {
+                        const navLink = document.querySelector(`[data-section="${sectionId}"]`);
+                        if (navLink) {
+                            navLink.classList.add('completed');
+                        }
+                    });
+                    // Restore last visited section if exists
+                    if (progress.currentSection && document.getElementById(progress.currentSection)) {
+                        this.showSection(progress.currentSection);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.warn('Could not load progress:', error);
+            }
+            // Show welcome if nothing else
+            this.showSection('welcome');
+        }
+
+        resetProgress() {
+            if (confirm('Вы уверены, что хотите сбросить весь прогресс?')) {
+                this.completedSections.clear();
+                localStorage.removeItem('openwebui-tutorial-progress');
+                // Remove completed visual indicators
+                document.querySelectorAll('.nav-link.completed').forEach(link => {
+                    link.classList.remove('completed');
+                });
+                this.updateProgressBar();
+                this.showSection('welcome');
+            }
+        }
+
+        toggleTheme() {
+            this.isDarkTheme = !this.isDarkTheme;
+            document.documentElement.setAttribute('data-color-scheme', this.isDarkTheme ? 'dark' : 'light');
+            localStorage.setItem('theme-preference', this.isDarkTheme ? 'dark' : 'light');
+        }
+
+        setupMobileMenu() {
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            mobileToggle?.addEventListener('click', () => {
+                sidebar?.classList.toggle('open');
+                mobileToggle?.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!sidebar?.contains(e.target) && !mobileToggle?.contains(e.target)) {
+                    sidebar?.classList.remove('open');
+                    mobileToggle?.classList.remove('active');
+                }
+            });
+        }
+
+        // Quiz functionality
+        initializeQuiz() {
+            const startQuizBtn = document.getElementById('startQuizBtn');
+            startQuizBtn?.addEventListener('click', () => {
+                this.startQuiz();
+            });
+        }
+
+        startQuiz() {
+            const quizQuestions = [
+                {
+                    question: "Под какой лицензией распространяется Open WebUI?",
+                    options: ["GPL", "MIT", "Open WebUI License", "Apache 2.0"],
+                    correct: 2
+                },
+                {
+                    question: "Какой порт используется по умолчанию?",
+                    options: ["3000", "8000", "8080", "9000"],
+                    correct: 2
+                },
+                {
+                    question: "Что означает RAG?",
+                    options: [
+                        "Random Access Generation",
+                        "Retrieval Augmented Generation",
+                        "Rapid AI Generation",
+                        "Real‑time Automatic Generation"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Какая комбинация открывает палитру команд?",
+                    options: ["Ctrl+K", "Ctrl+P", "Ctrl+F", "Ctrl+H"],
+                    correct: 0
+                },
+                {
+                    question: "Для какого формата лучше всего извлекаются таблицы?",
+                    options: ["PDF", "DOCX", "TXT", "HTML"],
+                    correct: 1
+                },
+                {
+                    question: "Какой параметр задаёт случайность ответов модели?",
+                    options: ["Top P", "Temperature", "Max Tokens", "Presence Penalty"],
+                    correct: 1
+                },
+                {
+                    question: "Какая клавиша отправляет сообщение?",
+                    options: ["Ctrl+Enter", "Shift+Enter", "Alt+Enter", "Tab+Enter"],
+                    correct: 0
+                },
+                {
+                    question: "Как временно выбрать другую модель в чате?",
+                    options: ["#", "@", "/", "&"],
+                    correct: 1
+                },
+                {
+                    question: "Какой оптимальный размер CHUNK_SIZE?",
+                    options: ["100–300", "800–1200", "1500–2000", "3000+"],
+                    correct: 1
+                },
+                {
+                    question: "Как называется техника, заставляющая модель рассуждать пошагово?",
+                    options: ["Few‑Shot", "Role‑Playing", "Chain‑of‑Thought", "Self‑Consistency"],
+                    correct: 2
+                }
+            ];
+
+            this.renderQuiz(quizQuestions);
+        }
+
+        renderQuiz(questions) {
+            document.getElementById('quizInstructions').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+
+            let currentQuestion = 0;
+            let score = 0;
+            const answers = [];
+
+            const renderQuestion = () => {
+                const quizContainer = document.getElementById('quiz');
+                const question = questions[currentQuestion];
+
+                quizContainer.innerHTML = `
+                    <div style="margin-bottom: 24px; text-align: center;">
+                        <h3>Вопрос ${currentQuestion + 1} из ${questions.length}</h3>
+                        <div style="width: 100%; height: 8px; background: var(--color-secondary); border-radius: 4px; margin: 16px 0;">
+                            <div style="width: ${((currentQuestion) / questions.length) * 100}%; height: 100%; background: var(--color-primary); border-radius: 4px; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <div style="background: var(--color-surface); padding: 32px; border-radius: 12px; border: 1px solid var(--color-card-border);">
+                        <h4 style="margin-bottom: 24px; font-size: 18px;">${question.question}</h4>
+                        <div style="display: grid; gap: 12px;">
+                            ${question.options.map((option, index) => `
+                                <button class="quiz-option" data-index="${index}" style="
+                                    display: flex; align-items: center; gap: 12px; padding: 16px; 
+                                    background: var(--color-background); border: 2px solid var(--color-border); 
+                                    border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: left;
+                                    font-size: 14px; width: 100%;
+                                ">
+                                    <span style="
+                                        width: 24px; height: 24px; border-radius: 50%; 
+                                        background: var(--color-secondary); display: flex; 
+                                        align-items: center; justify-content: center; 
+                                        font-weight: bold; font-size: 12px; flex-shrink: 0;
+                                    ">${String.fromCharCode(65 + index)}</span>
+                                    ${option}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div style="margin-top: 24px; text-align: center;">
+                            <button id="nextQuizBtn" class="btn btn--primary" disabled style="opacity: 0.5;">
+                                ${currentQuestion === questions.length - 1 ? 'Завершить тест' : 'Следующий вопрос'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Add option click handlers
+                document.querySelectorAll('.quiz-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        // Remove previous selections
+                        document.querySelectorAll('.quiz-option').forEach(opt => {
+                            opt.style.borderColor = 'var(--color-border)';
+                            opt.style.background = 'var(--color-background)';
+                        });
+
+                        // Highlight selected option
+                        option.style.borderColor = 'var(--color-primary)';
+                        option.style.background = 'var(--color-bg-1)';
+
+                        // Enable next button
+                        const nextBtn = document.getElementById('nextQuizBtn');
+                        nextBtn.disabled = false;
+                        nextBtn.style.opacity = '1';
+
+                        // Store answer
+                        answers[currentQuestion] = parseInt(option.dataset.index);
+                    });
+                });
+
+                // Next button handler
+                document.getElementById('nextQuizBtn').onclick = () => {
+                    currentQuestion++;
+
+                    if (currentQuestion < questions.length) {
+                        renderQuestion();
+                    } else {
+                        this.showQuizResults(questions, answers);
+                    }
+                };
+            };
+
+            renderQuestion();
+        }
+
+        showQuizResults(questions, answers) {
+            let score = 0;
+            answers.forEach((answer, index) => {
+                if (answer === questions[index].correct) {
+                    score++;
+                }
+            });
+
+            const percentage = Math.round((score / questions.length) * 100);
+            let level = 'Новичок';
+            let message = 'Продолжайте изучение материала!';
+            let messageClass = 'needs-improvement';
+
+            if (percentage >= 80) {
+                level = 'Эксперт';
+                message = 'Отличный результат! Вы хорошо знаете Open WebUI.';
+                messageClass = 'excellent';
+            } else if (percentage >= 60) {
+                level = 'Продвинутый';
+                message = 'Хороший результат, но есть куда расти.';
+                messageClass = 'good';
+            }
+
+            document.getElementById('quiz').innerHTML = `
+                <div style="text-align: center; background: var(--color-surface); padding: 40px; border-radius: 12px; border: 1px solid var(--color-card-border);">
+                    <h3 style="margin-bottom: 24px;">Результаты</h3>
+                    
+                    <div style="font-size: 48px; font-weight: bold; color: var(--color-primary); margin-bottom: 16px;">
+                        ${percentage}%
+                    </div>
+                    
+                    <div style="
+                        padding: 12px 24px; border-radius: 24px; font-weight: bold; 
+                        font-size: 16px; display: inline-block; margin-bottom: 24px;
+                        background: ${
+                            messageClass === 'excellent' ? 'var(--color-success)' : 
+                            messageClass === 'good' ? 'var(--color-warning)' : 'var(--color-error)'
+                        };
+                        color: white;
+                    ">
+                        ${level}
+                    </div>
+                    
+                    <div style="
+                        padding: 24px; border-radius: 12px; margin-bottom: 32px; font-size: 16px;
+                        background: var(--color-surface);
+                        border: 1px solid ${
+                            messageClass === 'excellent' ? 'var(--color-success)' : 
+                            messageClass === 'good' ? 'var(--color-warning)' : 'var(--color-error)'
+                        };
+                        color: var(--color-text);
+                    ">
+                        ${message}
+                    </div>
+                    
+                    <div style="background: var(--color-surface); padding: 24px; border-radius: 12px; margin-bottom: 32px; border: 1px solid var(--color-card-border);">
+                        <h4 style="margin-bottom: 16px; color: var(--color-text);">Подробности:</h4>
+                        <p>Правильных ответов: <strong>${score} из ${questions.length}</strong></p>
+                        <p>Процент успеха: <strong>${percentage}%</strong></p>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                        <button class="btn btn--primary" onclick="location.reload()">Пройти заново</button>
+                        <button class="btn btn--outline" onclick="app.showSection('welcome')">Вернуться на главную</button>
+                    </div>
+                </div>
+            `;
+
+            // Mark quiz as completed
+            this.markSectionCompleted('quiz');
+        }
+    }
+
+    // Initialize application when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        window.app = new TutorialApp();
+        // Load theme preference
+        const savedTheme = localStorage.getItem('theme-preference');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-color-scheme', savedTheme);
+        }
+    });
+</script>
+</body>
+</html>
