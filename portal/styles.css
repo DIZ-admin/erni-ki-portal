@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
   /* ERNI Corporate Palette */
-  --primary-color: #0000EE; /* ERNI Blue */
-  --primary-hover: #0000CC;
+  --primary-color: #0000ee; /* ERNI Blue */
+  --primary-hover: #0000cc;
   --secondary-color: #333333; /* Dark Grey */
-  --accent-color: #0000EE; 
-  --background-color: #FFFFFF; /* Pure White */
-  --surface-color: #F8F8F8; /* Light Grey Surface */
+  --accent-color: #0000ee;
+  --background-color: #ffffff; /* Pure White */
+  --surface-color: #f8f8f8; /* Light Grey Surface */
   --text-main: #000000; /* Pure Black */
   --text-muted: #666666;
-  --border-color: #E5E5E5;
+  --border-color: #e5e5e5;
 
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -18,12 +20,12 @@
   --spacing-xl: 4rem; /* More whitespace */
 
   /* Typography */
-  --font-main: "Helvetica Neue", "Helvetica", "Arial", sans-serif; /* Swiss Style */
+  --font-main: "Inter", "Helvetica Neue", "Helvetica", "Arial", sans-serif; /* Swiss Style */
   --radius-md: 0; /* Square corners */
   --radius-lg: 0;
   --shadow-sm: none; /* Flat design */
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.05); /* Subtle lift */
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle lift */
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -48,7 +50,7 @@ body {
 }
 
 .sidebar {
-  background: #FFFFFF; /* Pure white */
+  background: #ffffff; /* Pure white */
   border-right: 2px solid var(--border-color);
   padding: var(--spacing-lg);
   position: sticky;
@@ -57,6 +59,16 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  z-index: 100;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .logo {
@@ -67,10 +79,10 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 2px solid var(--border-color);
-  margin-bottom: var(--spacing-md);
   letter-spacing: 0.02em;
+  margin-bottom: 0; /* Reset margin as it's handled by sidebar-header now */
+  padding-bottom: 0; /* Reset padding */
+  border-bottom: none; /* Reset border */
 }
 
 .logo-icon {
@@ -87,15 +99,34 @@ body {
   letter-spacing: 0.05em;
 }
 
+.menu-toggle {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-main);
+  padding: 0.5rem;
+}
+
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-nav li {
+  margin-bottom: 0.25rem;
+}
+
 .nav-item {
   display: block;
   padding: 0.75rem 1rem;
   color: var(--text-main);
   text-decoration: none;
   border-radius: 0;
-  margin-bottom: 0;
   font-weight: 400;
-  transition: background-color 0.15s ease;
+  transition: all 0.15s ease;
   border-left: 3px solid transparent;
 }
 
@@ -104,7 +135,8 @@ body {
   border-left-color: var(--primary-color);
 }
 
-.nav-item.active {
+.nav-item.active,
+.nav-item[aria-current="page"] {
   background-color: var(--surface-color);
   color: var(--primary-color);
   font-weight: 600;
@@ -186,10 +218,189 @@ img {
   .layout {
     grid-template-columns: 1fr;
   }
+  
   .sidebar {
     height: auto;
-    position: relative;
+    position: sticky;
+    top: 0;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-lg);
   }
+
+  .sidebar-header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+    width: 100%;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    display: none; /* Hidden by default on mobile */
+    width: 100%;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 1rem;
+  }
+
+  .main-nav.open {
+    display: block;
+  }
+}
+
+/* Accordion (from FAQ) */
+.accordion-item {
+  border-bottom: 1px solid var(--border-color);
+}
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 1.5rem 0;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-main);
+}
+.accordion-header:hover {
+  color: var(--primary-color);
+}
+.accordion-header::after {
+  content: "+";
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.accordion-header.active::after {
+  content: "−";
+}
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.accordion-content {
+  padding-bottom: 1.5rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Monitoring Dashboard */
+.metric-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+}
+.metric-title {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.dashboard-link {
+  display: block;
+  padding: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #334155;
+  transition: all 0.2s;
+}
+.dashboard-link:hover {
+  background: #fff;
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.status-green {
+  background-color: #22c55e;
+}
+.status-red {
+  background-color: #ef4444;
+}
+
+/* CO-STAR (from Best Practices) */
+.costar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.costar-card {
+  background: #fff;
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.costar-card:hover {
+  border-color: var(--primary-color);
+}
+.costar-letter {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 48px;
+  margin-bottom: 1rem;
+}
+.example-box {
+  background: #f8fafc;
+  border-left: 3px solid var(--primary-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+.comparison-table th,
+.comparison-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.comparison-table th {
+  background: var(--surface-color);
+  font-weight: 600;
+}
+.bad-example {
+  color: #dc2626;
+}
+.good-example {
+  color: #16a34a;
 }

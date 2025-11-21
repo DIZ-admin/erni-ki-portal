@@ -5,64 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ | ERNI-KI</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .accordion-item {
-            border-bottom: 1px solid var(--border-color);
-        }
-        .accordion-header {
-            width: 100%;
-            text-align: left;
-            padding: 1.5rem 0;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-main);
-        }
-        .accordion-header:hover {
-            color: var(--primary-color);
-        }
-        .accordion-header::after {
-            content: '+';
-            font-size: 1.5rem;
-            font-weight: 400;
-        }
-        .accordion-header.active::after {
-            content: '−';
-        }
-        .accordion-panel {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-        }
-        .accordion-content {
-            padding-bottom: 1.5rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-    </style>
+
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">ERNI Gruppe</span>
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    ☰
+                </button>
             </div>
-            <nav>
-                <a href="index.html" class="nav-item">🏠 Главная</a>
-                <a href="guides/basics.html" class="nav-item">🚀 Основы</a>
-                <a href="guides/rag.html" class="nav-item">📚 Работа с данными</a>
-                <a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a>
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
-                <a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
-                <a href="prompts.html" class="nav-item">📂 Библиотека Промптов</a>
-                <a href="faq.html" class="nav-item active">❓ FAQ</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item">🏠 Главная</a></li>
+                    <li><a href="guides/basics.html" class="nav-item">🚀 Основы</a></li>
+                    <li><a href="guides/rag.html" class="nav-item">📚 Работа с данными</a></li>
+                    <li><a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="guides/tools.html" class="nav-item">🛠 Инструменты</a></li>
+                    <li><a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="faq.html" class="nav-item" aria-current="page">❓ FAQ</a></li>
+                    <li><a href="guides/architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+                </ul>
             </nav>
         </aside>
 
@@ -101,7 +70,48 @@
                     </button>
                     <div class="accordion-panel">
                         <div class="accordion-content">
-                            <p>Да, система делает автоматические бэкапы всех данных каждые 24 часа. Если вы случайно удалили важный чат, обратитесь в поддержку для восстановления.</p>
+                            <p>Да, система использует <strong>Backrest v1.9.2</strong> для автоматических бэкапов:</p>
+                            <ul style="list-style-type: disc; margin-left: 20px;">
+                                <li>Ежедневные бэкапы в 01:30 (7 дневных копий)</li>
+                                <li>Недельные бэкапы (4 недельных копии)</li>
+                                <li>Бэкапируются: база данных, конфигурации, документы</li>
+                            </ul>
+                            <p>Если вы случайно удалили важный чат, обратитесь в поддержку для восстановления.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Как обеспечивается безопасность системы?
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="accordion-content">
+                            <p>ERNI-KI использует многоуровневую защиту:</p>
+                            <ul style="list-style-type: disc; margin-left: 20px;">
+                                <li><strong>Cloudflare Zero Trust</strong>: 5 защищённых туннелей для внешнего доступа</li>
+                                <li><strong>JWT аутентификация</strong>: Go-сервис на порту 9092</li>
+                                <li><strong>Nginx WAF</strong>: Rate limiting и security headers</li>
+                                <li><strong>Docker Secrets</strong>: Безопасное хранение паролей и ключей</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Как мониторится работа системы?
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="accordion-content">
+                            <p>ERNI-KI имеет enterprise-grade систему мониторинга:</p>
+                            <ul style="list-style-type: disc; margin-left: 20px;">
+                                <li><strong>Grafana v11.3.0</strong>: 18 дашбордов (GPU, LLM, DB, Security)</li>
+                                <li><strong>Prometheus v3.0.0</strong>: 27 alert rules для критических событий</li>
+                                <li><strong>Loki v3.0.0 + Fluent Bit</strong>: Централизованное логирование</li>
+                                <li><strong>8 exporters</strong>: node, postgres, redis, nvidia, blackbox, ollama, nginx, cadvisor</li>
+                            </ul>
+                            <p>Система автоматически отправляет алерты при проблемах с GPU, базой данных или сервисами.</p>
                         </div>
                     </div>
                 </div>
@@ -138,6 +148,19 @@
             </div>
         </main>
     </div>
-    <script src="scripts.js"></script>
+    <script src="scripts.js">    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -5,32 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ERNI-KI | Корпоративный AI Портал</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">ERNI Gruppe</span>
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    ☰
+                </button>
             </div>
-            <nav>
-                <a href="index.html" class="nav-item active">🏠 Главная</a>
-                <a href="guides/basics.html" class="nav-item">🚀 Основы</a>
-                <a href="guides/rag.html" class="nav-item">📚 Работа с данными</a>
-                <a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a>
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
-                <a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
-                <a href="prompts.html" class="nav-item">📂 Библиотека Промптов</a>
-                <a href="faq.html" class="nav-item">❓ FAQ</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item active" aria-current="page">🏠 Главная</a></li>
+                    <li><a href="guides/basics.html" class="nav-item">🚀 Основы</a></li>
+                    <li><a href="guides/rag.html" class="nav-item">📚 Работа с данными</a></li>
+                    <li><a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="guides/tools.html" class="nav-item">🛠 Инструменты</a></li>
+                    <li><a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="faq.html" class="nav-item">❓ FAQ</a></li>
+                    <li><a href="guides/architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+                </ul>
             </nav>
         </aside>
 
         <main class="content">
             <section class="hero">
                 <h1>ERNI Gruppe</h1>
-                <p>Ваш корпоративный AI-ассистент на базе Llama 3.2.<br>Безопасно. Локально. Мощно.</p>
-                <a href="https://ki.erni-gruppe.ch" target="_blank" class="btn btn-primary">Открыть ERNI-KI ↗</a>
+                <p>Корпоративная AI-платформа на базе OpenWebUI и Ollama.<br>30 сервисов. GPU-ускорение. Enterprise-grade мониторинг.</p>
+                <a href="https://ki.erni-gruppe.ch" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Открыть ERNI-KI ↗</a>
             </section>
 
             <div class="grid">
@@ -50,16 +58,25 @@
                     <p>Готовые шаблоны для HR, IT, Sales и Management. Просто скопируйте.</p>
                 </a>
                 <a href="guides/advanced.html" class="card">
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
                     <span class="card-icon">⚡️</span>
                     <h3>Продвинутые фишки</h3>
-                    <p>Голосовой ввод, инструменты MCP (Time, Memory) и режим "Thinking".</p>
+                    <p>Голосовой ввод, 4 MCP инструмента (Time, Memory, PostgreSQL, Filesystem) и режим "Thinking".</p>
                 </a>
-                <a href="best-practices.html" class="card">
-                    <span class="card-icon">🎓</span>
-                    <h3>Академия Промптинга</h3>
-                    <p>Как писать запросы, чтобы получать идеальные ответы (CO-STAR).</p>
+                <a href="guides/architecture.html" class="card">
+                    <span class="card-icon">🗂️</span>
+                    <h3>Архитектура</h3>
+                    <p>Обзор всех сервисов и их статуса.</p>
                 </a>
+                <a href="monitoring.html" class="card">
+                    <span class="card-icon">📊</span>
+                    <h3>Мониторинг</h3>
+                    <p>Grafana, Prometheus, логи и метрики производительности.</p>
+                </a>
+            <a href="best-practices.html" class="card">
+                <span class="card-icon">🎓</span>
+                <h3>Академия Промптинга</h3>
+                <p>Как писать запросы, чтобы получать идеальные ответы (CO-STAR).</p>
+            </a>
                 <a href="faq.html" class="card">
                     <span class="card-icon">🛡</span>
                     <h3>Безопасность & FAQ</h3>
@@ -68,5 +85,18 @@
             </div>
         </main>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

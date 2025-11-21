@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг | ERNI-KI</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item">🏠 Главная</a></li>
+                    <li><a href="guides/basics.html" class="nav-item">🚀 Основы</a></li>
+                    <li><a href="guides/rag.html" class="nav-item">📚 Работа с данными</a></li>
+                    <li><a href="guides/advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="guides/tools.html" class="nav-item">🛠 Инструменты</a></li>
+                    <li><a href="best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="faq.html" class="nav-item">❓ FAQ</a></li>
+                    <li><a href="guides/architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="monitoring.html" class="nav-item" aria-current="page">📊 Мониторинг</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <section class="hero">
+                <h1>Система Мониторинга</h1>
+                <p>Наблюдаемость (Observability) полного цикла: метрики, логи и алертинг.</p>
+            </section>
+
+            <div class="grid">
+                <div class="card">
+                    <h2>🛠 Стек Технологий</h2>
+                    <p>Мы используем стандартный Cloud Native стек для мониторинга:</p>
+                    <ul style="list-style-type: disc; margin-left: 20px; margin-top: 1rem;">
+                        <li><strong>Grafana v11.3.0</strong>: Визуализация данных и дашборды.</li>
+                        <li><strong>Prometheus v3.0.0</strong>: Сбор метрик с сервисов (TSDB).</li>
+                        <li><strong>Loki v3.0.0</strong>: Агрегация логов со всех контейнеров.</li>
+                        <li><strong>Alertmanager</strong>: Управление оповещениями.</li>
+                        <li><strong>cAdvisor & Node Exporter</strong>: Метрики контейнеров и хоста.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>📈 Ключевые Метрики</h2>
+                    <div class="metric-card">
+                        <div class="metric-title">GPU Usage</div>
+                        <div class="metric-value">NVIDIA RTX 4090</div>
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">Мониторинг памяти, температуры и утилизации CUDA ядер.</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Inference Speed</div>
+                        <div class="metric-value">Tokens/Sec</div>
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">Скорость генерации токенов для LLM моделей.</p>
+                    </div>
+                </div>
+            </div>
+
+            <section style="margin-top: 2rem;">
+                <h2>🖥 Доступные Дашборды</h2>
+                <p>Перейдите в Grafana для детального анализа (требуется VPN/внутренняя сеть):</p>
+                <div class="dashboard-grid">
+                    <a href="http://localhost:3000/d/llm-monitoring" target="_blank" rel="noopener noreferrer" class="dashboard-link">
+                        <strong>🤖 LLM Performance</strong>
+                        <br><span style="font-size: 0.8rem; color: #64748b;">Задержка, токены, ошибки</span>
+                    </a>
+                    <a href="http://localhost:3000/d/gpu-metrics" target="_blank" rel="noopener noreferrer" class="dashboard-link">
+                        <strong>🎮 GPU Metrics</strong>
+                        <br><span style="font-size: 0.8rem; color: #64748b;">Температура, память, питание</span>
+                    </a>
+                    <a href="http://localhost:3000/d/docker-containers" target="_blank" rel="noopener noreferrer" class="dashboard-link">
+                        <strong>🐳 Docker Containers</strong>
+                        <br><span style="font-size: 0.8rem; color: #64748b;">CPU, RAM, Network I/O</span>
+                    </a>
+                    <a href="http://localhost:3000/d/nginx-ingress" target="_blank" rel="noopener noreferrer" class="dashboard-link">
+                        <strong>🌐 Nginx Traffic</strong>
+                        <br><span style="font-size: 0.8rem; color: #64748b;">RPS, Latency, GeoIP</span>
+                    </a>
+                </div>
+            </section>
+
+            <section style="margin-top: 2rem;">
+                <h2>🚨 Алертинг</h2>
+                <div class="card">
+                    <p>Система настроена на автоматическое оповещение при следующих событиях:</p>
+                    <ul style="list-style-type: disc; margin-left: 20px; margin-top: 1rem;">
+                        <li><span class="status-indicator status-red"></span><strong>High GPU Temperature</strong>: > 80°C</li>
+                        <li><span class="status-indicator status-red"></span><strong>Service Down</strong>: Любой контейнер недоступен > 1 мин</li>
+                        <li><span class="status-indicator status-red"></span><strong>High Error Rate</strong>: > 5% ошибок 5xx на Nginx</li>
+                        <li><span class="status-indicator status-red"></span><strong>Disk Space</strong>: < 10% свободного места</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

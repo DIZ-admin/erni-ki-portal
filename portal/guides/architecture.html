@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Архитектура ERNI-KI</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <div class="logo-icon"></div>
+            <span class="logo-text">ERNI Gruppe</span>
+          </div>
+          <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="../index.html" class="nav-item">🏠 Главная</a></li>
+            <li><a href="basics.html" class="nav-item">🚀 Основы</a></li>
+            <li><a href="rag.html" class="nav-item">📚 Работа с данными</a></li>
+            <li><a href="advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+            <li><a href="tools.html" class="nav-item">🛠 Инструменты</a></li>
+            <li><a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+            <li><a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+            <li><a href="../faq.html" class="nav-item">❓ FAQ</a></li>
+            <li><a href="architecture.html" class="nav-item" aria-current="page">🗂️ Архитектура</a></li>
+            <li><a href="../monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <header class="page-header">
+          <h1>Архитектура ERNI-KI</h1>
+          <p class="lead">
+            Обзор всех сервисов, их взаимосвязей и текущего статуса.
+          </p>
+        </header>
+        <section id="service-diagram">
+          <h2>Диаграмма сервисов</h2>
+          <div class="mermaid">
+            graph TD;
+              subgraph Infra[Инфраструктура]
+                NGINX[Nginx Reverse Proxy]
+                CLOUD[Cloudflare Zero Trust]
+              end
+              subgraph Core[Основные сервисы]
+                WEBUI[OpenWebUI]
+                LITELLM[LiteLLM Gateway]
+                OLLAMA[Ollama]
+              end
+              subgraph MCP[Инструменты MCP]
+                MCPSRV[MCP Server]
+                TIME[Time]
+                MEMORY[Memory]
+                PG[PostgreSQL]
+                FS[Filesystem]
+              end
+              subgraph RAG[RAG компоненты]
+                DOCLING[Docling]
+                TIKA[Apache Tika]
+                EDGETTS[EdgeTTS]
+                SEARXNG[SearXNG]
+              end
+              subgraph Monitoring[Мониторинг]
+                GRAFANA[Grafana]
+                PROM[Prometheus]
+                LOKI[Loki]
+              end
+
+              CLOUD --> NGINX
+              NGINX --> WEBUI
+              WEBUI --> LITELLM
+              LITELLM --> OLLAMA
+              
+              LITELLM --> MCPSRV
+              MCPSRV --> TIME
+              MCPSRV --> MEMORY
+              MCPSRV --> PG
+              MCPSRV --> FS
+              
+              WEBUI -.-> DOCLING
+              WEBUI -.-> TIKA
+              WEBUI -.-> EDGETTS
+              WEBUI -.-> SEARXNG
+              
+              PROM -.-> WEBUI
+              PROM -.-> LITELLM
+              PROM -.-> OLLAMA
+              GRAFANA --> PROM
+              GRAFANA --> LOKI
+          </div>
+        </section>
+        <section id="service-status" style="margin-top: 2rem">
+          <button
+            id="refresh-status"
+            class="btn btn-primary"
+            style="margin-bottom: 1rem"
+          >
+            Обновить статус сервисов
+          </button>
+          <script>
+            document
+              .getElementById("refresh-status")
+              .addEventListener("click", async function () {
+                const btn = this;
+                const originalText = btn.textContent;
+                btn.textContent = "Проверка...";
+                btn.disabled = true;
+
+                const services = [
+                  { id: "nginx", url: "http://localhost:80/", label: "NGINX" },
+                  { id: "cloudflare", url: "http://localhost:8080/", label: "Cloudflare Tunnel" }, // Assuming Nginx/Cloudflared interaction
+                  { id: "openwebui", url: "http://localhost:8080/health", label: "OpenWebUI" },
+                  { id: "ollama", url: "http://localhost:11434/", label: "Ollama" },
+                  { id: "litellm", url: "http://localhost:4000/health/liveliness", label: "LiteLLM" },
+                  { id: "docling", url: "http://localhost:5001/health", label: "Docling" }, // Internal, might fail
+                  { id: "tika", url: "http://localhost:9998/tika", label: "Apache Tika" },
+                  { id: "edgetts", url: "http://localhost:5050/", label: "EdgeTTS" },
+                  { id: "searxng", url: "http://localhost:8080/", label: "SearXNG" }, // Internal/Nginx
+                  { id: "grafana", url: "http://localhost:3000/api/health", label: "Grafana" },
+                  { id: "prometheus", url: "http://localhost:9091/-/healthy", label: "Prometheus" },
+                ];
+
+                const checkService = async (service) => {
+                  const el = document.getElementById("status-" + service.id);
+                  if (!el) return;
+
+                  try {
+                    // Try fetching with a timeout
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2000);
+                    
+                    // mode: 'no-cors' allows checking if service is up even if CORS is not configured
+                    // It returns an opaque response (status 0) if successful-ish, or throws error if network down
+                    await fetch(service.url, { 
+                        mode: 'no-cors', 
+                        signal: controller.signal 
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    // If we got here, the service accepted the connection
+                    el.textContent = "🟢 Онлайн";
+                    el.style.color = "#16a34a";
+                  } catch (error) {
+                    console.warn(`Check failed for ${service.id}:`, error);
+                    el.textContent = "🔴 Недоступен";
+                    el.style.color = "#dc2626";
+                    el.title = error.name === 'AbortError' ? 'Timeout' : 'Network Error/Offline';
+                  }
+                };
+
+                await Promise.all(services.map(checkService));
+
+                btn.textContent = originalText;
+                btn.disabled = false;
+              });
+          </script>
+          <table style="width: 100%; border-collapse: collapse">
+            <thead>
+              <tr style="background: #f1f5f9">
+                <th style="padding: 0.75rem; text-align: left">Сервис</th>
+                <th style="padding: 0.75rem; text-align: left">Статус</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">NGINX</td>
+                <td id="status-nginx" style="padding: 0.75rem; color: #16a34a">
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">Cloudflare Zero Trust</td>
+                <td
+                  id="status-cloudflare"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">OpenWebUI</td>
+                <td
+                  id="status-openwebui"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">Ollama</td>
+                <td id="status-ollama" style="padding: 0.75rem; color: #16a34a">
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">LiteLLM</td>
+                <td
+                  id="status-litellm"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">Docling</td>
+                <td
+                  id="status-docling"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">Apache Tika</td>
+                <td id="status-tika" style="padding: 0.75rem; color: #16a34a">
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">EdgeTTS</td>
+                <td
+                  id="status-edgetts"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">SearXNG</td>
+                <td
+                  id="status-searxng"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0">
+                <td style="padding: 0.75rem">Grafana</td>
+                <td
+                  id="status-grafana"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 0.75rem">Prometheus</td>
+                <td
+                  id="status-prometheus"
+                  style="padding: 0.75rem; color: #16a34a"
+                >
+                  🟢 Онлайн
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Корпоративный AI Портал. Разработано командой DIZ.</p>
+      </div>
+    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        if (menuToggle && mainNav) {
+          menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
+            menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

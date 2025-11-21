@@ -10,19 +10,26 @@
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">ERNI Gruppe</span>
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
             </div>
-            <nav>
-                <a href="../index.html" class="nav-item">🏠 Главная</a>
-                <a href="basics.html" class="nav-item">🚀 Основы</a>
-                <a href="rag.html" class="nav-item">📚 Работа с данными</a>
-                <a href="advanced.html" class="nav-item active">⚡️ Продвинутый уровень</a>
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
-                <a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
-                <a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a>
-                <a href="../faq.html" class="nav-item">❓ FAQ</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-item">🏠 Главная</a></li>
+                    <li><a href="basics.html" class="nav-item">🚀 Основы</a></li>
+                    <li><a href="rag.html" class="nav-item">📚 Работа с данными</a></li>
+                    <li><a href="advanced.html" class="nav-item" aria-current="page">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="tools.html" class="nav-item">🛠 Инструменты</a></li>
+                    <li><a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="../faq.html" class="nav-item">❓ FAQ</a></li>
+                    <li><a href="architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="../monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+                </ul>
             </nav>
         </aside>
 
@@ -160,5 +167,17 @@
             <p>&copy; 2025 Корпоративный AI Портал. Разработано командой DIZ.</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

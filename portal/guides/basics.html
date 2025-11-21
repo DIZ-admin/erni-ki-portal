@@ -5,24 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Основы | ERNI-KI</title>
     <link rel="stylesheet" href="../styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">ERNI Gruppe</span>
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
             </div>
-            <nav>
-                <a href="../index.html" class="nav-item">🏠 Главная</a>
-                <a href="basics.html" class="nav-item active">🚀 Основы</a>
-                <a href="rag.html" class="nav-item">📚 Работа с данными</a>
-                <a href="advanced.html" class="nav-item">⚡️ Продвинутый уровень</a>
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
-                <a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
-                <a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a>
-                <a href="../faq.html" class="nav-item">❓ FAQ</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-item">🏠 Главная</a></li>
+                    <li><a href="basics.html" class="nav-item" aria-current="page">🚀 Основы</a></li>
+                    <li><a href="rag.html" class="nav-item">📚 Работа с данными</a></li>
+                    <li><a href="advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="tools.html" class="nav-item">🛠 Инструменты</a></li>
+                    <li><a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="../faq.html" class="nav-item">❓ FAQ</a></li>
+                    <li><a href="architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="../monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+                </ul>
             </nav>
         </aside>
 
@@ -37,11 +43,11 @@
                 <p>Давайте не будем читать теорию, а сразу попробуем. Следуйте этим шагам:</p>
                 <div class="step-card" style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-color); margin-bottom: 1rem;">
                     <h3>Шаг 1: Вход</h3>
-                    <p>Перейдите на <a href="https://ki.erni-gruppe.ch" target="_blank">ki.erni-gruppe.ch</a> и войдите через корпоративную почту.</p>
+                    <p>Перейдите на <a href="https://ki.erni-gruppe.ch" target="_blank" rel="noopener noreferrer">ki.erni-gruppe.ch</a> и войдите через корпоративную почту.</p>
                 </div>
                 <div class="step-card" style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-color); margin-bottom: 1rem;">
-                    <h3>Шаг 2: Выбор "Коллеги"</h3>
-                    <p>Сверху выберите модель <strong>Llama 3.1 (8B)</strong>. Представьте, что это новый стажер, который прочитал весь интернет, но не знает специфики вашей задачи.</p>
+                    <h3>Шаг 2: Выбор модели</h3>
+                    <p>Сверху выберите модель в зависимости от задачи. Для начала попробуйте <strong>lokal / gpt-oss / komplexe Themen (20.9B)</strong> — мощная локальная модель для сложных задач.</p>
                 </div>
                 <div class="step-card" style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-color); margin-bottom: 1rem;">
                     <h3>Шаг 3: Первый запрос</h3>
@@ -60,15 +66,17 @@
                     </div>
                     <div>
                         <h4>⚙️ Настройки (Верхняя панель)</h4>
-                        <p>Здесь живут модели. <strong>Llama 3.2 (3B)</strong> — быстрая как молния, для простых писем. <strong>Llama 3.1 (8B)</strong> — умная, для отчетов и кода.</p>
+                        <p>Здесь выбираются модели. Есть <strong>внешние</strong> (ext) для сложных задач, <strong>локальные</strong> (local/lokal) для конфиденциальных данных, и <strong>агенты</strong> для специализированных задач.</p>
                     </div>
                 </div>
             </section>
 
             <section id="models">
                 <h2>3. Какую модель выбрать?</h2>
-                <p>В ERNI-KI мы используем локальные модели, работающие на наших GPU. Это безопасно и бесплатно.</p>
+                <p>В ERNI-KI доступны различные типы моделей: внешние (external), локальные (local) и специализированные агенты.</p>
                 <img src="../images/models.png" alt="Выбор модели" style="width: 100%; border-radius: 8px; margin: 1rem 0; border: 1px solid #e5e7eb;">
+                
+                <h3 style="margin-top: 2rem;">Внешние модели (External)</h3>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
                     <thead>
                         <tr style="background: #f1f5f9; text-align: left;">
@@ -78,15 +86,63 @@
                     </thead>
                     <tbody>
                         <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.75rem;"><strong>🧠 Llama 3.1 (8B)</strong></td>
-                            <td style="padding: 0.75rem;">Анализ документов, написание кода, сложные письма, креатив.</td>
+                            <td style="padding: 0.75rem;"><strong>🌐 ext / gpt-4.1 / einfache Fragen</strong></td>
+                            <td style="padding: 0.75rem;">Простые вопросы, быстрые ответы, общие задачи.</td>
                         </tr>
-                        <tr>
-                            <td style="padding: 0.75rem;"><strong>⚡️ Llama 3.2 (3B)</strong></td>
-                            <td style="padding: 0.75rem;">Быстрые ответы, саммари коротких текстов, перевод, чат-болталка.</td>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.75rem;"><strong>🧠 ext / gpt-5.1 / complexe Themen</strong></td>
+                            <td style="padding: 0.75rem;">Сложные темы, глубокий анализ, креативные задачи.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.75rem;"><strong>👁️ ext / gpt 4.1 / Vision</strong></td>
+                            <td style="padding: 0.75rem;">Анализ изображений, диаграмм, скриншотов.</td>
                         </tr>
                     </tbody>
                 </table>
+
+                <h3 style="margin-top: 2rem;">Локальные модели (Local)</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                    <thead>
+                        <tr style="background: #f1f5f9; text-align: left;">
+                            <th style="padding: 0.75rem;">Модель</th>
+                            <th style="padding: 0.75rem;">Для чего лучше всего?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.75rem;"><strong>🔒 lokal / gpt-oss / komplexe Themen (20.9B)</strong></td>
+                            <td style="padding: 0.75rem;">Конфиденциальные данные, сложные задачи, анализ документов. Работает на наших GPU.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem;"><strong>📷 local / Gemma / private Vision (9B)</strong></td>
+                            <td style="padding: 0.75rem;">Приватный анализ изображений, работа с визуальным контентом без отправки во внешние сервисы.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 2rem;">Специализированные агенты</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                    <thead>
+                        <tr style="background: #f1f5f9; text-align: left;">
+                            <th style="padding: 0.75rem;">Агент</th>
+                            <th style="padding: 0.75rem;">Для чего лучше всего?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.75rem;"><strong>👥 agent / HR Wissens</strong></td>
+                            <td style="padding: 0.75rem;">Вопросы по HR, кадровая политика, корпоративные процедуры.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem;"><strong>🏗️ agent / Holzbau PL Rapport</strong></td>
+                            <td style="padding: 0.75rem;">Деревянное строительство, отчёты по проектам, специализированная документация.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="tip-box" style="margin-top: 1.5rem; padding: 1rem; background: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
+                    <strong>💡 Совет:</strong> Для конфиденциальных данных используйте локальные модели (local/lokal). Они работают на наших серверах и не отправляют данные во внешние сервисы.
+                </div>
             </section>
 
             <section id="chat">
@@ -171,6 +227,18 @@
         <!-- Footer content if any -->
     </footer>
 
-    <script src="../scripts.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

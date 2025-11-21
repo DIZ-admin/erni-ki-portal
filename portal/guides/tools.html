@@ -8,20 +8,29 @@
 </head>
 <body>
     <div class="layout">
-        <nav class="sidebar">
-            <a href="../index.html" class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">ERNI Gruppe</span>
-            </a>
-            <a href="../guides/basics.html" class="nav-item">Начало работы</a>
-            <a href="../guides/rag.html" class="nav-item">RAG & Поиск</a>
-            <a href="../guides/advanced.html" class="nav-item">Продвинутые функции</a>
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
-            <a href="../guides/tools.html" class="nav-item active">Инструменты</a>
-            <a href="../best-practices.html" class="nav-item">Промпт-инжиниринг</a>
-            <a href="../prompts.html" class="nav-item">Библиотека промптов</a>
-            <a href="../faq.html" class="nav-item">FAQ</a>
-        </nav>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-item">🏠 Главная</a></li>
+                    <li><a href="basics.html" class="nav-item">🚀 Основы</a></li>
+                    <li><a href="rag.html" class="nav-item">📚 Работа с данными</a></li>
+                    <li><a href="advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="tools.html" class="nav-item" aria-current="page">🛠 Инструменты</a></li>
+                    <li><a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="../faq.html" class="nav-item">❓ FAQ</a></li>
+                    <li><a href="architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="../monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+                </ul>
+            </nav>
+        </aside>
         <main class="content">
             <div class="page-header">
                 <h1>Инструменты и функции</h1>
@@ -33,14 +42,15 @@
                     <h2>🛠 Что такое инструменты?</h2>
                     <p>Инструменты (Tools) — это дополнительные функции, которые AI может вызывать для выполнения специфических задач. Они работают как "плагины", расширяя базовые возможности модели.</p>
                     
-                    <h3>Примеры инструментов:</h3>
+                    <h3>Доступные MCP инструменты в ERNI-KI:</h3>
                     <ul style="list-style-type: disc; margin-left: 20px; margin-bottom: 1rem;">
-                        <li><strong>Baubeschreiber</strong>: Автоматическое создание строительных описаний</li>
-                        <li><strong>Web Scraper</strong>: Извлечение данных с веб-страниц</li>
-                        <li><strong>Calculator</strong>: Точные математические вычисления</li>
-                        <li><strong>Database Query</strong>: Запросы к базам данных</li>
-                        <li><strong>API Integrations</strong>: Интеграция с внешними сервисами</li>
+                        <li><strong>Time</strong>: Работа с временем, часовыми поясами, календарём и датами</li>
+                        <li><strong>Memory</strong>: Долговременная контекстная память для сохранения информации между сессиями</li>
+                        <li><strong>PostgreSQL</strong>: Прямой доступ к базе данных для аналитики и запросов</li>
+                        <li><strong>Filesystem</strong>: Чтение и запись файлов на сервере</li>
                     </ul>
+                    
+                    <p style="margin-top: 1rem;"><em>Примечание: Все инструменты работают через MCP Server (Model Context Protocol) на порту 8000.</em></p>
                 </div>
             </section>
 
@@ -58,7 +68,7 @@
                     <p>Просто опишите свою задачу в чате. AI автоматически решит, когда использовать подключенный инструмент.</p>
                     
                     <div class="tip-box">
-                        <strong>💡 Пример:</strong> Если вы включили "Baubeschreiber" и напишете "Создай описание для двухэтажного дома с подвалом", AI автоматически вызовет этот инструмент для генерации структурированного документа.
+                        <strong>💡 Пример:</strong> Если вы включили "Memory" и напишете "Запомни, что наш проект называется Phoenix и дедлайн 15 декабря", AI сохранит эту информацию и сможет использовать её в будущих сессиях.
                     </div>
                 </div>
             </section>
@@ -119,6 +129,17 @@
             </section>
         </main>
     </div>
-    <script src="../scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

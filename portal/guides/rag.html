@@ -10,19 +10,26 @@
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">ERNI Gruppe</span>
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ERNI Gruppe</span>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
             </div>
-            <nav>
-                <a href="../index.html" class="nav-item">🏠 Главная</a>
-                <a href="basics.html" class="nav-item">🚀 Основы</a>
-                <a href="rag.html" class="nav-item active">📚 Работа с данными</a>
-                <a href="advanced.html" class="nav-item">⚡️ Продвинутый уровень</a>
-                <a href="../guides/tools.html" class="nav-item">🛠 Инструменты</a>
-                <a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a>
-                <a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a>
-                <a href="../faq.html" class="nav-item">❓ FAQ</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-item">🏠 Главная</a></li>
+                    <li><a href="basics.html" class="nav-item">🚀 Основы</a></li>
+                    <li><a href="rag.html" class="nav-item" aria-current="page">📚 Работа с данными</a></li>
+                    <li><a href="advanced.html" class="nav-item">⚡️ Продвинутый уровень</a></li>
+                    <li><a href="tools.html" class="nav-item">🛠 Инструменты</a></li>
+                    <li><a href="../best-practices.html" class="nav-item">🎓 Академия Промптинга</a></li>
+                    <li><a href="../prompts.html" class="nav-item">📂 Библиотека Промптов</a></li>
+                    <li><a href="../faq.html" class="nav-item">❓ FAQ</a></li>
+                    <li><a href="architecture.html" class="nav-item">🗂️ Архитектура</a></li>
+                    <li><a href="../monitoring.html" class="nav-item">📊 Мониторинг</a></li>
+                </ul>
             </nav>
         </aside>
 
@@ -87,26 +94,26 @@
                     <p>OpenWebUI поддерживает множество движков для обработки документов и поиска. Вы можете настроить их в <strong>Settings > Documents</strong>.</p>
                     
                     <h3>Движки извлечения контента (OCR & Parsing)</h3>
+                    <p>В ERNI-KI настроены следующие компоненты для обработки документов:</p>
                     <ul style="list-style-type: disc; margin-left: 20px; margin-bottom: 1rem;">
-                        <li><strong>Default</strong>: Базовый парсер текста.</li>
-                        <li><strong>Tika</strong>: Apache Tika для поддержки сотен форматов.</li>
-                        <li><strong>Docling</strong>: Продвинутый парсер с поддержкой OCR, таблиц и описания изображений.</li>
-                        <li><strong>Datalab Marker</strong>: API для конвертации PDF в Markdown.</li>
-                        <li><strong>Mistral OCR</strong>: Использование OCR от Mistral AI.</li>
-                        <li><strong>MinerU</strong>: Мощный инструмент для извлечения контента (PDF/Web).</li>
+                        <li><strong>Docling</strong> (с GPU-ускорением): Продвинутый OCR/ingestion pipeline для обработки PDF, изображений и таблиц. Работает на порту 5001 с выделенным GPU.</li>
+                        <li><strong>Apache Tika</strong>: Экстракция контента и метаданных из сотен форматов файлов (Office, PDF, архивы). Работает на порту 9998.</li>
+                        <li><strong>EdgeTTS</strong>: Синтез речи для озвучивания ответов. Работает на порту 5050.</li>
                     </ul>
+                    
+                    <p style="margin-top: 1rem;"><em>Примечание: Все компоненты работают внутри защищённой сети и доступны только через OpenWebUI.</em></p>
 
                     <h3>Поисковые провайдеры</h3>
-                    <p>Для поиска в интернете (Web Search) поддерживаются:</p>
+                    <p>В ERNI-KI используется <strong>SearXNG</strong> — приватный метапоисковый движок, который агрегирует результаты из множества источников:</p>
                     <div class="tags">
-                        <span class="tag">Google PSE</span>
+                        <span class="tag">Google</span>
                         <span class="tag">Bing</span>
                         <span class="tag">Brave</span>
+                        <span class="tag">Wikipedia</span>
                         <span class="tag">DuckDuckGo</span>
-                        <span class="tag">SearXNG</span>
-                        <span class="tag">Perplexity</span>
-                        <span class="tag">SerpApi</span>
+                        <span class="tag">+ 70 других источников</span>
                     </div>
+                    <p style="margin-top: 1rem;"><em>SearXNG не отслеживает ваши запросы и не передаёт данные третьим лицам.</em></p>
 
                     <div class="tip-box">
                         <strong>💡 Pro Tip:</strong> Используйте символ <code>#</code> в чате, чтобы быстро выбрать коллекцию документов или конкретный файл для контекста.
@@ -120,5 +127,17 @@
             <p>&copy; 2025 Корпоративный AI Портал. Разработано командой DIZ.</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    menuToggle.textContent = mainNav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
